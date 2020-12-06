@@ -1,0 +1,1308 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration supports_adding_forbidden="true">
+    <property>
+        <name>block_cache_capacity_mb</name>
+        <value>512</value>
+        <default>512</default>
+        <tags>stable</tags>
+        <description>block cache capacity in MB</description>
+    </property>
+    <property>
+        <name>builtin_ntp_servers</name>
+        <value>0.pool.ntp.org,1.pool.ntp.org,2.pool.ntp.org,3.pool.ntp.org</value>
+        <default>0.pool.ntp.org,1.pool.ntp.org,2.pool.ntp.org,3.pool.ntp.org</default>
+        <tags>stable</tags>
+        <description>The NTP servers used by the built-in NTP client, in format &lt;FQDN|IP&gt;[:PORT]. These will only be used if the built-in NTP client is enabled (i.e. if setting --time_source=builtin).</description>
+    </property>
+    <property>
+        <name>time_source</name>
+        <value>system</value>
+        <default>system</default>
+        <tags>stable</tags>
+        <description>The time source that HybridClock should use. Must be one of auto, builtin, system, system_unsync (toy clusters/testing only), mock (testing only). When set to auto, the system automatically picks one of the following depending on the environment: builtin, system, system_unsync, where in case of picking builtin the built-in NTP client is configured with dedicated NTP server(s) provided by the environment.</description>
+    </property>
+    <property>
+        <name>log_force_fsync_all</name>
+        <value>false</value>
+        <default>false</default>
+        <tags>stable</tags>
+        <description>Whether the Log/WAL should explicitly call fsync() after each write.</description>
+    </property>
+    <property>
+        <name>fs_data_dirs</name>
+        <value>none</value>
+        <default>none</default>
+        <tags>stable</tags>
+        <description>Comma-separated list of directories with data blocks. If this is not specified, fs_wal_dir will be used as the sole data block directory.</description>
+    </property>
+    <property>
+        <name>fs_metadata_dir</name>
+        <value>none</value>
+        <default>none</default>
+        <tags>stable</tags>
+        <description>Directory with metadata. If this is not specified, for compatibility with Kudu 1.6 and below, Kudu will check the first entry of fs_data_dirs for metadata and use it as the metadata directory if any exists. If none exists, fs_wal_dir will be used as the metadata directory.</description>
+    </property>
+    <property>
+        <name>fs_wal_dir</name>
+        <value>none</value>
+        <default>none</default>
+        <tags>stable</tags>
+        <description>Directory with write-ahead logs. If this is not specified, the program will not start. May be the same as fs_data_dirs</description>
+    </property>
+    <property>
+        <name>keytab_file</name>
+        <value>none</value>
+        <default>none</default>
+        <tags>stable</tags>
+        <description>Path to the Kerberos Keytab file for this server. Specifying a keytab file will cause the server to kinit, and enable Kerberos to be used to authenticate RPC connections.</description>
+    </property>
+    <property>
+        <name>rpc_bind_addresses</name>
+        <value>0.0.0.0:7050</value>
+        <default>0.0.0.0:7050</default>
+        <tags>stable</tags>
+        <description>Comma-separated list of addresses to bind to for RPC connections. Currently, ephemeral ports (i.e. port 0) are not allowed.</description>
+    </property>
+    <property>
+        <name>superuser_acl</name>
+        <value>none</value>
+        <default>none</default>
+        <tags>sensitive,stable</tags>
+        <description>The list of usernames to allow as super users, comma-separated. A '*' entry indicates that all authenticated users are allowed. If this is left unset or blank, the default behavior is that the identity of the daemon itself determines the superuser. If the daemon is logged in from a Keytab, then the local username from the Kerberos principal is used; otherwise, the local Unix username is used.</description>
+    </property>
+    <property>
+        <name>user_acl</name>
+        <value>*</value>
+        <default>*</default>
+        <tags>sensitive,stable</tags>
+        <description>The list of usernames who may access the cluster, comma-separated. A '*' entry indicates that all authenticated users are allowed.</description>
+    </property>
+    <property>
+        <name>webserver_certificate_file</name>
+        <value>none</value>
+        <default>none</default>
+        <tags>stable</tags>
+        <description>The location of the debug webserver’s SSL certificate file, in PEM format. If empty, webserver SSL support is not enabled. If --webserver_private_key_file is set, this option must be set as well.</description>
+    </property>
+    <property>
+        <name>webserver_port</name>
+        <value>8050</value>
+        <default>8050</default>
+        <tags>stable</tags>
+        <description>Port to bind to for the web server</description>
+    </property>
+    <property>
+        <name>webserver_private_key_file</name>
+        <value>none</value>
+        <default>none</default>
+        <tags>stable</tags>
+        <description>The full path to the private key used as a counterpart to the public key contained in --webserver_certificate_file. If --webserver_certificate_file is set, this option must be set as well.</description>
+    </property>
+    <property>
+        <name>webserver_private_key_password_cmd</name>
+        <value>none</value>
+        <default>none</default>
+        <tags>stable</tags>
+        <description>A Unix command whose output returns the password used to decrypt the Webserver’s certificate private key file specified in --webserver_private_key_file. If the PEM key file is not password-protected, this flag does not need to be set. Trailing whitespace will be trimmed before it is used to decrypt the private key</description>
+    </property>
+    <property>
+        <name>webserver_require_spnego</name>
+        <value>false</value>
+        <default>false</default>
+        <tags>stable</tags>
+        <description>Require connections to the web server to authenticate via Kerberos using SPNEGO.</description>
+    </property>
+    <property>
+        <name>tserver_master_addrs</name>
+        <value>127.0.0.1:7051</value>
+        <default>127.0.0.1:7051</default>
+        <tags>stable</tags>
+        <description>Comma separated addresses of the masters which the tablet server should connect to. The masters do not read this flag — configure the masters separately using 'rpc_bind_addresses'.</description>
+    </property>
+    <property>
+        <name>log_filename</name>
+        <value>none</value>
+        <default>none</default>
+        <tags>stable</tags>
+        <description>Prefix of log filename - full path is &lt;log_dir&gt;/&lt;log_filename&gt;.[INFO|WARN|ERROR|FATAL]</description>
+    </property>
+    <property>
+        <name>maintenance_manager_num_threads</name>
+        <value>1</value>
+        <default>1</default>
+        <tags>stable</tags>
+        <description>Size of the maintenance manager thread pool. For spinning disks, the number of threads should not be above the number of devices.</description>
+    </property>
+    <property>
+        <name>memory_limit_hard_bytes</name>
+        <value>0</value>
+        <default>0</default>
+        <tags>stable</tags>
+        <description>Maximum amount of memory this daemon should use, in bytes. A value of 0 autosizes based on the total system memory. A value of -1 disables all memory limiting.</description>
+    </property>
+    <property>
+        <name>flagfile</name>
+        <value>none</value>
+        <default>none</default>
+        <tags>stable</tags>
+        <description>load flags from file</description>
+    </property>
+    <property>
+        <name>help</name>
+        <value>false</value>
+        <default>false</default>
+        <tags>stable</tags>
+        <description>show help on all flags [tip: all flags can have two dashes]</description>
+    </property>
+    <property>
+        <name>version</name>
+        <value>false</value>
+        <default>false</default>
+        <tags>stable</tags>
+        <description>show version and build info and exit</description>
+    </property>
+    <property>
+        <name>colorlogtostderr</name>
+        <value>false</value>
+        <default>false</default>
+        <tags>runtime,stable</tags>
+        <description>color messages logged to stderr (if supported by terminal)</description>
+    </property>
+    <property>
+        <name>log_dir</name>
+        <value>none</value>
+        <default>none</default>
+        <tags>stable</tags>
+        <description>If specified, logfiles are written into this directory instead of the default logging directory.</description>
+    </property>
+    <property>
+        <name>logtostderr</name>
+        <value>false</value>
+        <default>false</default>
+        <tags>runtime,stable</tags>
+        <description>log messages go to stderr instead of logfiles</description>
+    </property>
+    <property>
+        <name>max_log_size</name>
+        <value>1800</value>
+        <default>1800</default>
+        <tags>runtime,stable</tags>
+        <description>approx. maximum log file size (in MB). A value of 0 will be silently overridden to 1.</description>
+    </property>
+    <property>
+        <name>tablet_history_max_age_sec</name>
+        <value>604800</value>
+        <default>604800</default>
+        <tags>stable,advanced</tags>
+        <description>Number of seconds to retain tablet history, including history required to perform diff scans and incremental backups. Reads initiated at a snapshot that is older than this age will be rejected. To disable history removal, set to -1.</description>
+    </property>
+    <property>
+        <name>enable_process_lifetime_heap_profiling</name>
+        <value>false</value>
+        <default>false</default>
+        <tags>advanced,stable</tags>
+        <description>Enables heap profiling for the lifetime of the process. Profile output will be stored in the directory specified by -heap_profile_path.</description>
+    </property>
+    <property>
+        <name>heap_profile_path</name>
+        <value>none</value>
+        <default>none</default>
+        <tags>advanced,stable</tags>
+        <description>Output path to store heap profiles. If not set profiles are stored in /tmp/&lt;lprocess-name&gt;.&lt;pid&gt;.&lt;n&gt;.heap.</description>
+    </property>
+    <property>
+        <name>unlock_experimental_flags</name>
+        <value>false</value>
+        <default>false</default>
+        <tags>stable,advanced</tags>
+        <description>Unlock flags marked as 'experimental'. These flags are not guaranteed to be maintained across releases of Kudu, and may enable features or behavior known to be unstable. Use at your own risk.</description>
+    </property>
+    <property>
+        <name>unlock_unsafe_flags</name>
+        <value>false</value>
+        <default>false</default>
+        <tags>stable,advanced</tags>
+        <description>Unlock flags marked as 'unsafe'. These flags are not guaranteed to be maintained across releases of Kudu, and enable features or behavior known to be unsafe. Use at your own risk.</description>
+    </property>
+    <property>
+        <name>fromenv</name>
+        <value>none</value>
+        <default>none</default>
+        <tags>advanced,stable</tags>
+        <description>set flags from the environment [use 'export FLAGS_flag1=value']</description>
+    </property>
+    <property>
+        <name>tryfromenv</name>
+        <value>none</value>
+        <default>none</default>
+        <tags>advanced,stable</tags>
+        <description>set flags from the environment if present</description>
+    </property>
+    <property>
+        <name>undefok</name>
+        <value>none</value>
+        <default>none</default>
+        <tags>advanced,stable</tags>
+        <description>comma-separated list of flag names that it is okay to specify on the command line even if the program does not define a flag with that name.  IMPORTANT: flags in this list that have arguments MUST use the flag=value format</description>
+    </property>
+    <property>
+        <name>helpmatch</name>
+        <value>none</value>
+        <default>none</default>
+        <tags>advanced,stable</tags>
+        <description>show help on modules whose name contains the specified substr</description>
+    </property>
+    <property>
+        <name>helpon</name>
+        <value>none</value>
+        <default>none</default>
+        <tags>advanced,stable</tags>
+        <description>show help on the modules named by this flag value</description>
+    </property>
+    <property>
+        <name>helppackage</name>
+        <value>false</value>
+        <default>false</default>
+        <tags>advanced,stable</tags>
+        <description>show help on all modules in the main package</description>
+    </property>
+    <property>
+        <name>helpshort</name>
+        <value>false</value>
+        <default>false</default>
+        <tags>advanced,stable</tags>
+        <description>show help on only the main module for this program</description>
+    </property>
+    <property>
+        <name>helpxml</name>
+        <value>false</value>
+        <default>false</default>
+        <tags>advanced,stable</tags>
+        <description>produce an xml version of help</description>
+    </property>
+    <property>
+        <name>log_link</name>
+        <value>none</value>
+        <default>none</default>
+        <tags>advanced,stable</tags>
+        <description>Put additional links to the log files in this directory</description>
+    </property>
+    <property>
+        <name>log_prefix</name>
+        <value>true</value>
+        <default>true</default>
+        <tags>runtime,advanced,stable</tags>
+        <description>Prepend the log prefix to the start of each log line</description>
+    </property>
+    <property>
+        <name>minloglevel</name>
+        <value>0</value>
+        <default>0</default>
+        <tags>runtime,advanced,stable</tags>
+        <description>Messages logged at a lower level than this don’t actually get logged anywhere</description>
+    </property>
+    <property>
+        <name>stderrthreshold</name>
+        <value>2</value>
+        <default>2</default>
+        <tags>runtime,advanced,stable</tags>
+        <description>log messages at or above this level are copied to stderr in addition to logfiles.  This flag obsoletes --alsologtostderr.</description>
+    </property>
+    <property>
+        <name>stop_logging_if_full_disk</name>
+        <value>false</value>
+        <default>false</default>
+        <tags>runtime,advanced,stable</tags>
+        <description>Stop attempting to log to disk if the disk is full.</description>
+    </property>
+    <property>
+        <name>symbolize_stacktrace</name>
+        <value>true</value>
+        <default>true</default>
+        <tags>runtime,advanced,stable</tags>
+        <description>Symbolize the stack trace in the tombstone</description>
+    </property>
+    <property>
+        <name>v</name>
+        <value>0</value>
+        <default>0</default>
+        <tags>runtime,advanced,stable</tags>
+        <description>Show all VLOG(m) messages for m ⇐ this. Overridable by --vmodule.</description>
+    </property>
+    <property>
+        <name>vmodule</name>
+        <value>none</value>
+        <default>none</default>
+        <tags>advanced,stable</tags>
+        <description>per-module verbose level. Argument is a comma-separated list of &lt;module name&gt;=&lt;log level&gt;. &lt;module name&gt; is a glob pattern, matched against the filename base (that is, name ignoring .cc/.h./-inl.h). &lt;log level&gt; overrides any value given by --v.</description>
+    </property>
+    <property>
+        <name>block_cache_type</name>
+        <value>DRAM</value>
+        <default>DRAM</default>
+        <description>Which type of block cache to use for caching data. Valid choices are 'DRAM' or 'NVM'. DRAM, the default, caches data in regular memory. 'NVM' caches data in a memory-mapped file using the memkind library. To use 'NVM', libmemkind 1.8.0 or newer must be available on the system; otherwise Kudu will crash.</description>
+    </property>
+    <property>
+        <name>cfile_verify_checksums</name>
+        <value>true</value>
+        <default>true</default>
+        <tags>evolving</tags>
+        <description>Verify the checksum for each block on read if one exists</description>
+    </property>
+    <property>
+        <name>cfile_default_block_size</name>
+        <value>262144</value>
+        <default>262144</default>
+        <tags>advanced</tags>
+        <description>The default block size to use in cfiles</description>
+    </property>
+    <property>
+        <name>cfile_default_compression_codec</name>
+        <value>no_compression</value>
+        <default>no_compression</default>
+        <tags>advanced</tags>
+        <description>Default cfile block compression codec.</description>
+    </property>
+    <property>
+        <name>cfile_write_checksums</name>
+        <value>true</value>
+        <default>true</default>
+        <tags>evolving</tags>
+        <description>Write CRC32 checksums for each block</description>
+    </property>
+    <property>
+        <name>builtin_ntp_client_bind_address</name>
+        <value>0.0.0.0</value>
+        <default>0.0.0.0</default>
+        <tags>advanced</tags>
+        <description>Local address to bind client UDP socket used to send and receive NTP packets. The default value '0.0.0.0' is equivalent to '0.0.0.0:0' meaning 'bind to all available IPv4 interfaces using ephemeral ports (i.e. port 0)'. It might be useful to customize this flag if getting through a firewall to reach public NTP servers specified by --builtin_ntp_servers.</description>
+    </property>
+    <property>
+        <name>builtin_ntp_poll_interval_ms</name>
+        <value>16000</value>
+        <default>16000</default>
+        <tags>runtime,advanced</tags>
+        <description>The time between successive polls of a single NTP server (in milliseconds)</description>
+    </property>
+    <property>
+        <name>max_clock_sync_error_usec</name>
+        <value>10000000</value>
+        <default>10000000</default>
+        <tags>runtime,advanced</tags>
+        <description>Maximum allowed clock synchronization error as reported by NTP before the server will abort.</description>
+    </property>
+    <property>
+        <name>ntp_initial_sync_wait_secs</name>
+        <value>60</value>
+        <default>60</default>
+        <tags>evolving,advanced</tags>
+        <description>Amount of time in seconds to wait for clock synchronisation at startup. A value of zero means Kudu will fail to start if the clock is unsynchronized. This flag can prevent Kudu from crashing if it starts before NTP can synchronize the clock.</description>
+    </property>
+    <property>
+        <name>predicate_effectivess_enabled</name>
+        <value>true</value>
+        <default>true</default>
+        <tags>runtime,advanced</tags>
+        <description>Should ineffective predicate filtering be disabled</description>
+    </property>
+    <property>
+        <name>predicate_effectivess_num_skip_blocks</name>
+        <value>128</value>
+        <default>128</default>
+        <tags>runtime,advanced</tags>
+        <description>Number of blocks to skip for every predicate effectiveness check</description>
+    </property>
+    <property>
+        <name>predicate_effectivess_reject_ratio</name>
+        <value>0.10000000000000001</value>
+        <default>0.10000000000000001</default>
+        <tags>runtime,advanced</tags>
+        <description>Rejection ratio below which predicate filter is considered ineffective</description>
+    </property>
+    <property>
+        <name>cmeta_force_fsync</name>
+        <value>false</value>
+        <default>false</default>
+        <tags>advanced</tags>
+        <description>Whether fsync() should be called when consensus metadata files are updated</description>
+    </property>
+    <property>
+        <name>consensus_rpc_timeout_ms</name>
+        <value>30000</value>
+        <default>30000</default>
+        <tags>advanced</tags>
+        <description>Timeout used for all consensus internal RPC communications.</description>
+    </property>
+    <property>
+        <name>consensus_max_batch_size_bytes</name>
+        <value>1048576</value>
+        <default>1048576</default>
+        <tags>advanced</tags>
+        <description>The maximum per-tablet RPC batch size when updating peers.</description>
+    </property>
+    <property>
+        <name>follower_unavailable_considered_failed_sec</name>
+        <value>300</value>
+        <default>300</default>
+        <tags>runtime,advanced</tags>
+        <description>Seconds that a leader is unable to successfully heartbeat to a follower after which the follower is considered to be failed and evicted from the config.</description>
+    </property>
+    <property>
+        <name>fs_wal_dir_reserved_bytes</name>
+        <value>-1</value>
+        <default>-1</default>
+        <tags>runtime</tags>
+        <description>Number of bytes to reserve on the log directory filesystem for non-Kudu usage. The default, which is represented by -1, is that 1% of the disk space on each disk will be reserved. Any other value specified represents the number of bytes reserved and must be greater than or equal to 0. Explicit percentages to reserve are not currently supported</description>
+    </property>
+    <property>
+        <name>fs_wal_use_file_cache</name>
+        <value>true</value>
+        <default>true</default>
+        <tags>advanced,runtime</tags>
+        <description>Whether to use the server-wide file cache for WAL segments and WAL index chunks.</description>
+    </property>
+    <property>
+        <name>group_commit_queue_size_bytes</name>
+        <value>4194304</value>
+        <default>4194304</default>
+        <tags>advanced</tags>
+        <description>Maximum size of the group commit queue in bytes</description>
+    </property>
+    <property>
+        <name>log_min_segments_to_retain</name>
+        <value>1</value>
+        <default>1</default>
+        <tags>advanced,runtime</tags>
+        <description>The minimum number of past log segments to keep at all times, regardless of what is required for durability. Must be at least 1.</description>
+    </property>
+    <property>
+        <name>global_log_cache_size_limit_mb</name>
+        <value>1024</value>
+        <default>1024</default>
+        <tags>advanced</tags>
+        <description>Server-wide version of 'log_cache_size_limit_mb'. The total memory used for caching log entries across all tablets is kept under this threshold.</description>
+    </property>
+    <property>
+        <name>log_cache_size_limit_mb</name>
+        <value>128</value>
+        <default>128</default>
+        <tags>advanced</tags>
+        <description>The total per-tablet size of consensus entries which may be kept in memory. The log cache attempts to keep all entries which have not yet been replicated to all followers in memory, but if the total size of those entries exceeds this limit within an individual tablet, the oldest will be evicted.</description>
+    </property>
+    <property>
+        <name>log_async_preallocate_segments</name>
+        <value>true</value>
+        <default>true</default>
+        <tags>advanced</tags>
+        <description>Whether the WAL segments preallocation should happen asynchronously</description>
+    </property>
+    <property>
+        <name>log_preallocate_segments</name>
+        <value>true</value>
+        <default>true</default>
+        <tags>advanced</tags>
+        <description>Whether the WAL should preallocate the entire segment before writing to it</description>
+    </property>
+    <property>
+        <name>log_segment_size_mb</name>
+        <value>8</value>
+        <default>8</default>
+        <tags>advanced</tags>
+        <description>The default size for log segments, in MB</description>
+    </property>
+    <property>
+        <name>evict_failed_followers</name>
+        <value>true</value>
+        <default>true</default>
+        <tags>advanced</tags>
+        <description>Whether to evict followers from the Raft config that have fallen too far behind the leader’s log to catch up normally or have been unreachable by the leader for longer than follower_unavailable_considered_failed_sec</description>
+    </property>
+    <property>
+        <name>leader_failure_max_missed_heartbeat_periods</name>
+        <value>3</value>
+        <default>3</default>
+        <tags>advanced</tags>
+        <description>Maximum heartbeat periods that the leader can fail to heartbeat in before we consider the leader to be failed. The total failure timeout in milliseconds is raft_heartbeat_interval_ms times leader_failure_max_missed_heartbeat_periods. The value passed to this flag may be fractional.</description>
+    </property>
+    <property>
+        <name>raft_heartbeat_interval_ms</name>
+        <value>500</value>
+        <default>500</default>
+        <tags>advanced</tags>
+        <description>The heartbeat interval for Raft replication. The leader produces heartbeats to followers at this interval. The followers expect a heartbeat at this interval and consider a leader to have failed if it misses several in a row.</description>
+    </property>
+    <property>
+        <name>safe_time_advancement_without_writes</name>
+        <value>true</value>
+        <default>true</default>
+        <tags>advanced</tags>
+        <description>Whether to enable the advancement of "safe" time in the absense of write operations</description>
+    </property>
+    <property>
+        <name>fs_data_dirs_available_space_cache_seconds</name>
+        <value>10</value>
+        <default>10</default>
+        <tags>evolving,advanced</tags>
+        <description>Number of seconds we cache the available disk space in the block manager.</description>
+    </property>
+    <property>
+        <name>fs_data_dirs_consider_available_space</name>
+        <value>true</value>
+        <default>true</default>
+        <tags>evolving,runtime</tags>
+        <description>Whether to consider available space when selecting a data directory during tablet or data block creation.</description>
+    </property>
+    <property>
+        <name>fs_data_dirs_reserved_bytes</name>
+        <value>-1</value>
+        <default>-1</default>
+        <tags>evolving,runtime</tags>
+        <description>Number of bytes to reserve on each data directory filesystem for non-Kudu usage. The default, which is represented by -1, is that 1% of the disk space on each disk will be reserved. Any other value specified represents the number of bytes reserved and must be greater than or equal to 0. Explicit percentages to reserve are not currently supported</description>
+    </property>
+    <property>
+        <name>fs_max_thread_count_per_data_dir</name>
+        <value>8</value>
+        <default>8</default>
+        <tags>advanced</tags>
+        <description>Maximum work thread per data directory.</description>
+    </property>
+    <property>
+        <name>fs_target_data_dirs_per_tablet</name>
+        <value>3</value>
+        <default>3</default>
+        <tags>evolving,advanced</tags>
+        <description>Indicates the target number of data dirs to spread each tablet’s data across. If greater than the number of data dirs available, data will be striped across those available. A value of 0 indicates striping should occur across all healthy data dirs. Using fewer data dirs per tablet means a single drive failure will be less likely to affect a given tablet.</description>
+    </property>
+    <property>
+        <name>block_manager</name>
+        <value>log</value>
+        <default>log</default>
+        <tags>advanced</tags>
+        <description>Which block manager to use for storage. Valid options are 'file' and 'log'. The file block manager is not suitable for production use due to scaling limitations.</description>
+    </property>
+    <property>
+        <name>log_container_excess_space_before_cleanup_fraction</name>
+        <value>0.10000000000000001</value>
+        <default>0.10000000000000001</default>
+        <tags>advanced</tags>
+        <description>Additional fraction of a log container’s calculated size that must be consumed on disk before the container is considered to be inconsistent and subject to excess space cleanup at block manager startup.</description>
+    </property>
+    <property>
+        <name>log_container_max_blocks</name>
+        <value>-1</value>
+        <default>-1</default>
+        <tags>advanced</tags>
+        <description>Maximum number of blocks (soft) of a log container. Use 0 for no limit. Use -1 for no limit except in the case of a kernel bug with hole punching on ext4 (see KUDU-1508 for details).</description>
+    </property>
+    <property>
+        <name>log_container_max_size</name>
+        <value>10737418240</value>
+        <default>10737418240</default>
+        <tags>advanced</tags>
+        <description>Maximum size (soft) of a log container</description>
+    </property>
+    <property>
+        <name>log_container_preallocate_bytes</name>
+        <value>33554432</value>
+        <default>33554432</default>
+        <tags>advanced</tags>
+        <description>Number of bytes to preallocate in a log container when creating new blocks. Set to 0 to disable preallocation</description>
+    </property>
+    <property>
+        <name>server_thread_pool_max_thread_count</name>
+        <value>-1</value>
+        <default>-1</default>
+        <tags>evolving,advanced</tags>
+        <description>Maximum number of threads to allow in each server-wide thread pool. If -1, Kudu will automatically calculate this value. It is an error to use a value of 0.</description>
+    </property>
+    <property>
+        <name>rpc_acceptor_listen_backlog</name>
+        <value>128</value>
+        <default>128</default>
+        <tags>advanced</tags>
+        <description>Socket backlog parameter used when listening for RPC connections. This defines the maximum length to which the queue of pending TCP connections inbound to the RPC server may grow. If a connection request arrives when the queue is full, the client may receive an error. Higher values may help the server ride over bursts of new inbound connection requests.</description>
+    </property>
+    <property>
+        <name>rpc_encrypt_loopback_connections</name>
+        <value>false</value>
+        <default>false</default>
+        <tags>advanced</tags>
+        <description>Whether to encrypt data transfer on RPC connections that stay within a single host. Encryption here is likely to offer no additional security benefit since only a local 'root' user could intercept the traffic, and wire encryption does not suitably protect against such an attacker.</description>
+    </property>
+    <property>
+        <name>rpc_callback_max_cycles</name>
+        <value>100000000</value>
+        <default>100000000</default>
+        <tags>runtime,advanced</tags>
+        <description>The maximum number of cycles for which an RPC callback should be allowed to run without emitting a warning. (Advanced debugging option)</description>
+    </property>
+    <property>
+        <name>tcp_keepalive_probe_period_s</name>
+        <value>60</value>
+        <default>60</default>
+        <tags>advanced</tags>
+        <description>The duration in seconds after an outbound connection has gone idle before a TCP keepalive probe is sent to the peer. Set to 0 to disable TCP keepalive probes from being sent.</description>
+    </property>
+    <property>
+        <name>tcp_keepalive_retry_count</name>
+        <value>10</value>
+        <default>10</default>
+        <tags>advanced</tags>
+        <description>The maximum number of keepalive probes sent before declaring the remote end as dead. Effective only if --tcp_keepalive_probe_period_s is not 0.</description>
+    </property>
+    <property>
+        <name>tcp_keepalive_retry_period_s</name>
+        <value>3</value>
+        <default>3</default>
+        <tags>advanced</tags>
+        <description>The duration in seconds between successive keepalive probes from an outbound connection if the previous probes are not acknowledged. Effective only if --tcp_keepalive_probe_period_s is not 0.</description>
+    </property>
+    <property>
+        <name>remember_clients_ttl_ms</name>
+        <value>3600000</value>
+        <default>3600000</default>
+        <tags>advanced</tags>
+        <description>Maximum amount of time, in milliseconds, the server "remembers" a client for the purpose of caching its responses. After this period without hearing from it, the client is no longer remembered and the memory occupied by its responses is reclaimed. Retries of requests older than 'remember_clients_ttl_ms' are treated as new ones.</description>
+    </property>
+    <property>
+        <name>remember_responses_ttl_ms</name>
+        <value>600000</value>
+        <default>600000</default>
+        <tags>advanced</tags>
+        <description>Maximum amount of time, in milliseconds, the server "remembers" a response to a specific request for a client. After this period has elapsed, the response may have been garbage collected and the client might get a response indicating the request is STALE.</description>
+    </property>
+    <property>
+        <name>rpc_dump_all_traces</name>
+        <value>false</value>
+        <default>false</default>
+        <tags>runtime,advanced</tags>
+        <description>If true, dump all RPC traces at INFO level</description>
+    </property>
+    <property>
+        <name>rpc_duration_too_long_ms</name>
+        <value>1000</value>
+        <default>1000</default>
+        <tags>runtime,advanced</tags>
+        <description>Threshold (in milliseconds) above which a RPC is considered too long and its duration and method name are logged at INFO level. The time measured is between when a RPC is accepted and when its call handler completes.</description>
+    </property>
+    <property>
+        <name>trusted_subnets</name>
+        <value>127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,169.254.0.0/16</value>
+        <default>127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,169.254.0.0/16</default>
+        <tags>evolving,advanced</tags>
+        <description>A trusted subnet whitelist. If set explicitly, all unauthenticated or unencrypted connections are prohibited except the ones from the specified address blocks. Otherwise, private network (127.0.0.0/8, etc.) and local subnets of all local network interfaces will be used. Set it to '0.0.0.0/0' to allow unauthenticated/unencrypted connections from all remote IP addresses. However, if network access is not otherwise restricted by a firewall, malicious users may be able to gain unauthorized access.</description>
+    </property>
+    <property>
+        <name>rpc_max_message_size</name>
+        <value>52428800</value>
+        <default>52428800</default>
+        <tags>runtime,advanced</tags>
+        <description>The maximum size of a message that any RPC that the server will accept. Must be at least 1MB.</description>
+    </property>
+    <property>
+        <name>use_system_auth_to_local</name>
+        <value>true</value>
+        <default>true</default>
+        <tags>advanced</tags>
+        <description>When enabled, use the system krb5 library to map Kerberos principal names to local (short) usernames. If not enabled, the first component of the principal will be used as the short name. For example, 'kudu/foo.example.com@EXAMPLE' will map to 'kudu'.</description>
+    </property>
+    <property>
+        <name>metrics_default_level</name>
+        <value>debug</value>
+        <default>debug</default>
+        <tags>evolving,runtime,advanced</tags>
+        <description>The default severity level to use when filtering the metrics. Valid choices are 'debug', 'info', and 'warn'. The levels are ordered and lower levels include the levels above them. This value can be overridden by passing the level query parameter to the '/metrics' endpoint.</description>
+    </property>
+    <property>
+        <name>web_log_bytes</name>
+        <value>1048576</value>
+        <default>1048576</default>
+        <tags>runtime,advanced</tags>
+        <description>The maximum number of bytes to display on the debug webserver’s log page</description>
+    </property>
+    <property>
+        <name>rpc_advertised_addresses</name>
+        <value>none</value>
+        <default>none</default>
+        <tags>advanced</tags>
+        <description>Comma-separated list of addresses to advertise externally for RPC connections. Ephemeral ports (i.e. port 0) are not allowed. This should be configured when the locally bound RPC addresses specified in --rpc_bind_addresses are not externally resolvable, for example, if Kudu is deployed in a container.</description>
+    </property>
+    <property>
+        <name>rpc_num_acceptors_per_address</name>
+        <value>1</value>
+        <default>1</default>
+        <tags>advanced</tags>
+        <description>Number of RPC acceptor threads for each bound address</description>
+    </property>
+    <property>
+        <name>rpc_num_service_threads</name>
+        <value>20</value>
+        <default>20</default>
+        <tags>advanced</tags>
+        <description>Number of RPC worker threads to run</description>
+    </property>
+    <property>
+        <name>rpc_service_queue_length</name>
+        <value>50</value>
+        <default>50</default>
+        <tags>advanced</tags>
+        <description>Default length of queue for incoming RPC requests</description>
+    </property>
+    <property>
+        <name>gc_tcmalloc_memory_interval_seconds</name>
+        <value>30</value>
+        <default>30</default>
+        <tags>runtime,advanced</tags>
+        <description>Interval seconds to GC tcmalloc memory, 0 means disabled.</description>
+    </property>
+    <property>
+        <name>max_negotiation_threads</name>
+        <value>50</value>
+        <default>50</default>
+        <tags>advanced</tags>
+        <description>Maximum number of connection negotiation threads.</description>
+    </property>
+    <property>
+        <name>min_negotiation_threads</name>
+        <value>0</value>
+        <default>0</default>
+        <tags>advanced</tags>
+        <description>Minimum number of connection negotiation threads.</description>
+    </property>
+    <property>
+        <name>num_reactor_threads</name>
+        <value>4</value>
+        <default>4</default>
+        <tags>advanced</tags>
+        <description>Number of libev reactor threads to start.</description>
+    </property>
+    <property>
+        <name>rpc_authentication</name>
+        <value>optional</value>
+        <default>optional</default>
+        <tags>evolving</tags>
+        <description>Whether to require RPC connections to authenticate. Must be one of 'disabled', 'optional', or 'required'. If 'optional', authentication will be used when the remote end supports it. If 'required', connections which are not able to authenticate (because the remote end lacks support) are rejected. Secure clusters should use 'required'.</description>
+    </property>
+    <property>
+        <name>rpc_default_keepalive_time_ms</name>
+        <value>65000</value>
+        <default>65000</default>
+        <tags>advanced</tags>
+        <description>If an RPC connection from a client is idle for this amount of time, the server will disconnect the client. Setting this to any negative value keeps connections always alive.</description>
+    </property>
+    <property>
+        <name>rpc_encryption</name>
+        <value>optional</value>
+        <default>optional</default>
+        <tags>evolving</tags>
+        <description>Whether to require RPC connections to be encrypted. Must be one of 'disabled', 'optional', or 'required'. If 'optional', encryption will be used when the remote end supports it. If 'required', connections which are not able to use encryption (because the remote end lacks support) are rejected. If 'disabled', encryption will not be used, and RPC authentication (--rpc_authentication) must also be disabled as well. Secure clusters should use 'required'.</description>
+    </property>
+    <property>
+        <name>rpc_negotiation_timeout_ms</name>
+        <value>3000</value>
+        <default>3000</default>
+        <tags>runtime,advanced</tags>
+        <description>Timeout for negotiating an RPC connection.</description>
+    </property>
+    <property>
+        <name>rpc_private_key_password_cmd</name>
+        <value>none</value>
+        <default>none</default>
+        <description>A Unix command whose output returns the password used to decrypt the RPC server’s private key file specified in --rpc_private_key_file. If the .PEM key file is not password-protected, this flag does not need to be set. Trailing whitespace will be trimmed before it is used to decrypt the private key.</description>
+    </property>
+    <property>
+        <name>rpc_tls_ciphers</name>
+        <value>ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA</value>
+        <default>ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA</default>
+        <tags>advanced</tags>
+        <description>The cipher suite preferences to use for TLS-secured RPC connections. Uses the OpenSSL cipher preference list format. See man (1) ciphers for more information.</description>
+    </property>
+    <property>
+        <name>rpc_tls_min_protocol</name>
+        <value>TLSv1</value>
+        <default>TLSv1</default>
+        <tags>advanced</tags>
+        <description>The minimum protocol version to allow when for securing RPC connections with TLS. May be one of 'TLSv1', 'TLSv1.1', or 'TLSv1.2'.</description>
+    </property>
+    <property>
+        <name>server_max_open_files</name>
+        <value>0</value>
+        <default>0</default>
+        <tags>advanced</tags>
+        <description>Maximum number of open file descriptors. If 0, Kudu will automatically calculate this value. This is a soft limit</description>
+    </property>
+    <property>
+        <name>webserver_enabled</name>
+        <value>true</value>
+        <default>true</default>
+        <tags>advanced</tags>
+        <description>Whether to enable the web server on this daemon. NOTE: disabling the web server is also likely to prevent monitoring systems from properly capturing metrics.</description>
+    </property>
+    <property>
+        <name>metrics_log_interval_ms</name>
+        <value>60000</value>
+        <default>60000</default>
+        <tags>advanced</tags>
+        <description>Interval (in milliseconds) at which the server will dump its metrics to a local log file. The log files are located in the same directory as specified by the -log_dir flag. If this is not a positive value, then metrics logging will be disabled.</description>
+    </property>
+    <property>
+        <name>webserver_max_post_length_bytes</name>
+        <value>1048576</value>
+        <default>1048576</default>
+        <tags>runtime,advanced</tags>
+        <description>The maximum length of a POST request that will be accepted by the embedded web server.</description>
+    </property>
+    <property>
+        <name>webserver_x_frame_options</name>
+        <value>DENY</value>
+        <default>DENY</default>
+        <tags>advanced</tags>
+        <description>The webserver will add an 'X-Frame-Options' HTTP header with this value to all responses. This can help prevent clickjacking attacks.</description>
+    </property>
+    <property>
+        <name>webserver_advertised_addresses</name>
+        <value>none</value>
+        <default>none</default>
+        <tags>advanced</tags>
+        <description>Comma-separated list of addresses to advertise externally for HTTP(S) connections. Ephemeral ports (i.e. port 0) are not allowed. This should be configured when the locally bound webserver address specified in --webserver_interface and --webserver_port are not externally resolvable, for example, if Kudu is deployed in a container.</description>
+    </property>
+    <property>
+        <name>webserver_authentication_domain</name>
+        <value>none</value>
+        <default>none</default>
+        <description>Domain used for debug webserver authentication</description>
+    </property>
+    <property>
+        <name>webserver_doc_root</name>
+        <value>none</value>
+        <default>none</default>
+        <tags>advanced</tags>
+        <description>Files under &lt;webserver_doc_root&gt; are accessible via the debug webserver. Defaults to $KUDU_HOME/www, or if $KUDU_HOME is not set, disables the document root</description>
+    </property>
+    <property>
+        <name>webserver_enable_doc_root</name>
+        <value>true</value>
+        <default>true</default>
+        <tags>advanced</tags>
+        <description>If true, webserver may serve static files from the webserver_doc_root</description>
+    </property>
+    <property>
+        <name>webserver_interface</name>
+        <value>none</value>
+        <default>none</default>
+        <tags>advanced</tags>
+        <description>Interface to start debug webserver on. If blank, webserver binds to 0.0.0.0</description>
+    </property>
+    <property>
+        <name>webserver_num_worker_threads</name>
+        <value>50</value>
+        <default>50</default>
+        <tags>advanced</tags>
+        <description>Maximum number of threads to start for handling web server requests</description>
+    </property>
+    <property>
+        <name>webserver_password_file</name>
+        <value>none</value>
+        <default>none</default>
+        <description>(Optional) Location of .htpasswd file containing user names and hashed passwords for debug webserver authentication</description>
+    </property>
+    <property>
+        <name>webserver_tls_ciphers</name>
+        <value>ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA</value>
+        <default>ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA</default>
+        <tags>advanced</tags>
+        <description>The cipher suite preferences to use for webserver HTTPS connections. Uses the OpenSSL cipher preference list format. See man (1) ciphers for more information.</description>
+    </property>
+    <property>
+        <name>webserver_tls_min_protocol</name>
+        <value>TLSv1</value>
+        <default>TLSv1</default>
+        <tags>advanced</tags>
+        <description>The minimum protocol version to allow when for webserver HTTPS connections. May be one of 'TLSv1', 'TLSv1.1', or 'TLSv1.2'.</description>
+    </property>
+    <property>
+        <name>compaction_minimum_improvement</name>
+        <value>0.0099999997764825821</value>
+        <default>0.0099999997764825821</default>
+        <tags>advanced</tags>
+        <description>The minimum quality for a compaction to run. If a compaction does not improve the average height of DiskRowSets by at least this amount, the compaction will be considered ineligible.</description>
+    </property>
+    <property>
+        <name>tablet_transaction_memory_limit_mb</name>
+        <value>64</value>
+        <default>64</default>
+        <tags>advanced</tags>
+        <description>Maximum amount of memory that may be consumed by all in-flight ops belonging to a particular tablet. When this limit is reached, new ops will be rejected and clients will be forced to retry them. If -1, op memory tracking is disabled.</description>
+    </property>
+    <property>
+        <name>tablet_bloom_block_size</name>
+        <value>4096</value>
+        <default>4096</default>
+        <tags>advanced</tags>
+        <description>Block size of the bloom filters used for tablet keys.</description>
+    </property>
+    <property>
+        <name>tablet_bloom_target_fp_rate</name>
+        <value>9.9999997473787516e-05</value>
+        <default>9.9999997473787516e-05</default>
+        <tags>advanced</tags>
+        <description>Target false-positive rate (between 0 and 1) to size tablet key bloom filters. A lower false positive rate may reduce the number of disk seeks required in heavy insert workloads, at the expense of more space and RAM required for bloom filters.</description>
+    </property>
+    <property>
+        <name>enable_deleted_rowset_gc</name>
+        <value>true</value>
+        <default>true</default>
+        <tags>runtime</tags>
+        <description>Whether to enable garbage collection of fully deleted rowsets. Disabling deleted rowset garbage collection may increase disk space usage for workloads that involve a high number of deletes. Only deleted rowsets that are entirely considered ancient history (see --tablet_history_max_age_sec) are deleted.</description>
+    </property>
+    <property>
+        <name>undo_delta_block_gc_init_budget_millis</name>
+        <value>1000</value>
+        <default>1000</default>
+        <tags>advanced,evolving</tags>
+        <description>The maximum number of milliseconds we will spend initializing UNDO delta blocks per invocation of UndoDeltaBlockGCOp. Existing delta blocks must be initialized once per process startup to determine when they can be deleted.</description>
+    </property>
+    <property>
+        <name>heartbeat_incompatible_replica_management_is_fatal</name>
+        <value>true</value>
+        <default>true</default>
+        <tags>runtime,advanced</tags>
+        <description>Whether incompatible replica management schemes or unsupported PREPARE_REPLACEMENT_BEFORE_EVICTION feature flag by master are fatal</description>
+    </property>
+    <property>
+        <name>heartbeat_interval_ms</name>
+        <value>1000</value>
+        <default>1000</default>
+        <tags>advanced</tags>
+        <description>Interval at which the TS heartbeats to the master.</description>
+    </property>
+    <property>
+        <name>heartbeat_max_failures_before_backoff</name>
+        <value>3</value>
+        <default>3</default>
+        <tags>advanced</tags>
+        <description>Maximum number of consecutive heartbeat failures until the Tablet Server backs off to the normal heartbeat interval, rather than retrying.</description>
+    </property>
+    <property>
+        <name>heartbeat_rpc_timeout_ms</name>
+        <value>15000</value>
+        <default>15000</default>
+        <tags>advanced</tags>
+        <description>Timeout used for the TS→Master heartbeat RPCs.</description>
+    </property>
+    <property>
+        <name>scanner_ttl_ms</name>
+        <value>60000</value>
+        <default>60000</default>
+        <tags>runtime,advanced</tags>
+        <description>Number of milliseconds of inactivity allowed for a scannerbefore it may be expired</description>
+    </property>
+    <property>
+        <name>tablet_copy_begin_session_timeout_ms</name>
+        <value>30000</value>
+        <default>30000</default>
+        <tags>advanced</tags>
+        <description>Tablet server RPC client timeout for BeginTabletCopySession calls. Also used for EndTabletCopySession calls.</description>
+    </property>
+    <property>
+        <name>tablet_copy_idle_timeout_sec</name>
+        <value>600</value>
+        <default>600</default>
+        <tags>evolving,advanced</tags>
+        <description>Amount of time without activity before a tablet copy session will expire, in seconds</description>
+    </property>
+    <property>
+        <name>tablet_apply_pool_overload_threshold_ms</name>
+        <value>0</value>
+        <default>0</default>
+        <tags>advanced</tags>
+        <description>The threshold for the queue time of the 'apply' thread pool to enter and exit overloaded state. Once the queue stalls and its queue times become longer than the specified threshold, it enters the overloaded state. Tablet server rejects incoming write requests with some probability when its apply queue is overloaded. The longer the apply queue stays overloaded, the greater the probability of the rejection. In addition, the more row operations a write request has, the greater the probablity of the rejection. The apply queue exits the overloaded state when queue times drop below the specified threshold. Set this flag to 0 to disable the behavior described above.</description>
+    </property>
+    <property>
+        <name>scanner_batch_size_rows</name>
+        <value>128</value>
+        <default>128</default>
+        <tags>runtime,advanced</tags>
+        <description>The number of rows to batch for servicing scan requests.</description>
+    </property>
+    <property>
+        <name>scanner_default_batch_size_bytes</name>
+        <value>1048576</value>
+        <default>1048576</default>
+        <tags>runtime,advanced</tags>
+        <description>The default size for batches of scan results</description>
+    </property>
+    <property>
+        <name>scanner_max_batch_size_bytes</name>
+        <value>8388608</value>
+        <default>8388608</default>
+        <tags>runtime,advanced</tags>
+        <description>The maximum batch size that a client may request for scan results.</description>
+    </property>
+    <property>
+        <name>scanner_max_wait_ms</name>
+        <value>1000</value>
+        <default>1000</default>
+        <tags>advanced</tags>
+        <description>The maximum amount of time (in milliseconds) we’ll hang a scanner thread waiting for safe time to advance or ops to commit, even if its deadline allows waiting longer.</description>
+    </property>
+    <property>
+        <name>tserver_enforce_access_control</name>
+        <value>false</value>
+        <default>false</default>
+        <tags>runtime</tags>
+        <description>If set, the server will apply fine-grained access control rules to client RPCs.</description>
+    </property>
+    <property>
+        <name>num_tablets_to_copy_simultaneously</name>
+        <value>10</value>
+        <default>10</default>
+        <tags>advanced</tags>
+        <description>Number of threads available to copy tablets from remote servers.</description>
+    </property>
+    <property>
+        <name>num_tablets_to_delete_simultaneously</name>
+        <value>0</value>
+        <default>0</default>
+        <tags>advanced</tags>
+        <description>Number of threads available to delete tablets. If this is set to 0 (the default), then the number of delete threads will be set based on the number of data directories. If the data directories are on some very fast storage device such as SSD or a RAID array, it may make sense to manually tune this.</description>
+    </property>
+    <property>
+        <name>num_tablets_to_open_simultaneously</name>
+        <value>0</value>
+        <default>0</default>
+        <tags>advanced</tags>
+        <description>Number of threads available to open tablets during startup. If this is set to 0 (the default), then the number of bootstrap threads will be set based on the number of data directories. If the data directories are on some very fast storage device such as SSD or a RAID array, it may make sense to manually tune this.</description>
+    </property>
+    <property>
+        <name>tablet_state_walk_min_period_ms</name>
+        <value>1000</value>
+        <default>1000</default>
+        <tags>advanced</tags>
+        <description>Minimum amount of time in milliseconds between walks of the tablet map to update tablet state counts.</description>
+    </property>
+    <property>
+        <name>update_tablet_stats_interval_ms</name>
+        <value>5000</value>
+        <default>5000</default>
+        <tags>advanced</tags>
+        <description>Interval at which the tablet statistics should be updated.Should be greater than 'heartbeat_interval_ms'</description>
+    </property>
+    <property>
+        <name>cloud_aws_instance_id_url</name>
+        <value>http://169.254.169.254/latest/meta-data/instance-id</value>
+        <default>http://169.254.169.254/latest/meta-data/instance-id</default>
+        <tags>runtime,advanced</tags>
+        <description>The URL to fetch the identifier of an AWS instance</description>
+    </property>
+    <property>
+        <name>cloud_aws_ntp_server</name>
+        <value>169.254.169.123</value>
+        <default>169.254.169.123</default>
+        <tags>runtime,advanced</tags>
+        <description>IP address/FQDN of the internal NTP server to use from within an AWS instance</description>
+    </property>
+    <property>
+        <name>cloud_azure_instance_id_url</name>
+        <value>http://169.254.169.254/metadata/instance/compute/vmId?api-version=2018-10-01&amp;format=text</value>
+        <default>http://169.254.169.254/metadata/instance/compute/vmId?api-version=2018-10-01&amp;format=text</default>
+        <tags>runtime,advanced</tags>
+        <description>The URL to fetch the identifier of an Azure instance</description>
+    </property>
+    <property>
+        <name>cloud_gce_instance_id_url</name>
+        <value>http://metadata.google.internal/computeMetadata/v1/instance/id</value>
+        <default>http://metadata.google.internal/computeMetadata/v1/instance/id</default>
+        <tags>runtime,advanced</tags>
+        <description>The URL to fetch the identifier of a GCE instance</description>
+    </property>
+    <property>
+        <name>cloud_gce_ntp_server</name>
+        <value>metadata.google.internal</value>
+        <default>metadata.google.internal</default>
+        <tags>runtime,advanced</tags>
+        <description>IP address/FQDN of the internal NTP server to use from within a GCE instance</description>
+    </property>
+    <property>
+        <name>cloud_metadata_server_request_timeout_ms</name>
+        <value>1000</value>
+        <default>1000</default>
+        <tags>runtime,advanced</tags>
+        <description>Timeout for HTTP/HTTPS requests to the instance metadata server (in milliseconds)</description>
+    </property>
+    <property>
+        <name>cloud_openstack_metadata_url</name>
+        <value>http://169.254.169.254/openstack/latest/meta_data.json</value>
+        <default>http://169.254.169.254/openstack/latest/meta_data.json</default>
+        <tags>runtime,advanced</tags>
+        <description>The URL to fetch metadata of an OpenStack instance via Nova metadata service. OpenStack Nova metadata server does not provide a separate URL to fetch instance UUID, at least with 12.0.0 (Liberty) release.</description>
+    </property>
+    <property>
+        <name>env_use_fsync</name>
+        <value>false</value>
+        <default>false</default>
+        <tags>evolving,advanced</tags>
+        <description>Use fsync(2) instead of fdatasync(2) for synchronizing dirty data to disk.</description>
+    </property>
+    <property>
+        <name>file_cache_expiry_period_ms</name>
+        <value>60000</value>
+        <default>60000</default>
+        <tags>advanced</tags>
+        <description>Period of time (in ms) between removing expired file cache descriptors</description>
+    </property>
+    <property>
+        <name>disable_core_dumps</name>
+        <value>false</value>
+        <default>false</default>
+        <tags>evolving,advanced</tags>
+        <description>Disable core dumps when this process crashes.</description>
+    </property>
+    <property>
+        <name>redact</name>
+        <value>all</value>
+        <default>all</default>
+        <tags>evolving,advanced</tags>
+        <description>Comma-separated list that controls redaction context. Supported options are 'all','log', and 'none'. If 'all' is specified, sensitive data (sensitive configuration flags and row data) will be redacted from the web UI as well as glog and error messages. If 'log' is specified, sensitive data will only be redacted from glog and error messages. If 'none' is specified, no redaction will occur.</description>
+    </property>
+    <property>
+        <name>umask</name>
+        <value>077</value>
+        <default>077</default>
+        <tags>advanced</tags>
+        <description>The umask that will be used when creating files and directories. Permissions of top-level data directories will also be modified at start-up to conform to the given umask. Changing this value may enable unauthorized local users to read or modify data stored by Kudu.</description>
+    </property>
+    <property>
+        <name>metrics_retirement_age_ms</name>
+        <value>120000</value>
+        <default>120000</default>
+        <tags>advanced,runtime</tags>
+        <description>The minimum number of milliseconds a metric will be kept for after it is no longer active. (Advanced option)</description>
+    </property>
+    <property>
+        <name>enable_minidumps</name>
+        <value>true</value>
+        <default>true</default>
+        <tags>evolving,advanced</tags>
+        <description>Whether to enable minidump generation upon process crash or SIGUSR1. Currently only supported on Linux systems.</description>
+    </property>
+    <property>
+        <name>max_minidumps</name>
+        <value>9</value>
+        <default>9</default>
+        <tags>evolving</tags>
+        <description>Maximum number of minidump files to keep per daemon. Older files are removed first. Set to 0 to keep all minidump files.</description>
+    </property>
+    <property>
+        <name>minidump_path</name>
+        <value>minidumps</value>
+        <default>minidumps</default>
+        <tags>evolving</tags>
+        <description>Directory to write minidump files to. This can be either an absolute path or a path relative to --log_dir. Each daemon will create an additional sub-directory to prevent naming conflicts and to make it easier to identify a crashing daemon. Minidump files contain crash-related information in a compressed format. Minidumps will be written when a daemon exits unexpectedly, for example on an unhandled exception or signal, or when a SIGUSR1 signal is sent to the process. Cannot be set to an empty value.</description>
+    </property>
+    <property>
+        <name>minidump_size_limit_hint_kb</name>
+        <value>20480</value>
+        <default>20480</default>
+        <tags>evolving,advanced</tags>
+        <description>Size limit hint for minidump files in KB. If a minidump exceeds this value, then breakpad will reduce the stack memory it collects for each thread from 8KB to 2KB. However it will always include the full stack memory for the first 20 threads, including the thread that crashed.</description>
+    </property>
+    <property>
+        <name>dns_resolver_cache_capacity_mb</name>
+        <value>1</value>
+        <default>1</default>
+        <tags>advanced</tags>
+        <description>Capacity of DNS resolver cache, in MiBytes. For each key, the cache stores records returned by getaddrinfo(). A value of 0 means the results of DNS name resolution are not cached.</description>
+    </property>
+    <property>
+        <name>dns_resolver_cache_ttl_sec</name>
+        <value>15</value>
+        <default>15</default>
+        <tags>advanced</tags>
+        <description>TTL of records in the DNS resolver cache, in seconds.</description>
+    </property>
+    <property>
+        <name>dns_resolver_max_threads_num</name>
+        <value>1</value>
+        <default>1</default>
+        <tags>advanced</tags>
+        <description>The maximum number of threads to use for async DNS resolution</description>
+    </property>
+    <property>
+        <name>nvm_cache_path</name>
+        <value>/pmem</value>
+        <default>/pmem</default>
+        <description>The path at which the NVM cache will try to allocate its memory. This can be a tmpfs or ramfs for testing purposes.</description>
+    </property>
+    <property>
+        <name>nvm_cache_usage_ratio</name>
+        <value>1.25</value>
+        <default>1.25</default>
+        <tags>advanced</tags>
+        <description>A ratio to set the usage of nvm cache. The charge of an item in the nvm cache is equal to the results of memkind_malloc_usable_size multiplied by the ratio.</description>
+    </property>
+    <property>
+        <name>memory_limit_soft_percentage</name>
+        <value>80</value>
+        <default>80</default>
+        <tags>advanced</tags>
+        <description>Percentage of the hard memory limit that this daemon may consume before memory throttling of writes begins. The greater the excess, the higher the chance of throttling. In general, a lower soft limit leads to smoother write latencies but decreased throughput, and vice versa for a higher soft limit.</description>
+    </property>
+    <property>
+        <name>memory_limit_warn_threshold_percentage</name>
+        <value>98</value>
+        <default>98</default>
+        <tags>advanced</tags>
+        <description>Percentage of the hard memory limit that this daemon may consume before WARNING level messages are periodically logged.</description>
+    </property>
+    <property>
+        <name>memory_pressure_percentage</name>
+        <value>60</value>
+        <default>60</default>
+        <tags>advanced</tags>
+        <description>Percentage of the hard memory limit that this daemon may consume before flushing of in-memory data becomes prioritized.</description>
+    </property>
+    <property>
+        <name>tcmalloc_max_free_bytes_percentage</name>
+        <value>10</value>
+        <default>10</default>
+        <tags>advanced</tags>
+        <description>Maximum percentage of the RSS that tcmalloc is allowed to use for reserved but unallocated memory.</description>
+    </property>
+    <property>
+        <name>drop_log_memory</name>
+        <value>true</value>
+        <default>true</default>
+        <tags>runtime,advanced</tags>
+        <description>Drop in-memory buffers of log contents. Logs can grow very quickly and they are rarely read before they need to be evicted from memory. Instead, drop them from memory as soon as they are flushed to disk.</description>
+    </property>
+    <property>
+        <name>log_backtrace_at</name>
+        <value>none</value>
+        <default>none</default>
+        <tags>advanced</tags>
+        <description>Emit a backtrace when logging at file:linenum.</description>
+    </property>
+    <property>
+        <name>logbuflevel</name>
+        <value>0</value>
+        <default>0</default>
+        <tags>runtime,advanced</tags>
+        <description>Buffer log messages logged at this level or lower (-1 means don’t buffer; 0 means buffer INFO only; …​)</description>
+    </property>
+    <property>
+        <name>logbufsecs</name>
+        <value>5</value>
+        <default>5</default>
+        <tags>runtime,advanced</tags>
+        <description>Buffer log messages for at most this many seconds</description>
+    </property>
+    <property>
+        <name>logfile_mode</name>
+        <value>436</value>
+        <default>436</default>
+        <description>Log file mode/permissions.</description>
+    </property>
+</configuration>
