@@ -1,0 +1,20 @@
+# Do not modify these two lines. If you wish to change these variables,
+# modify them in /etc/default/kudu-master.
+--fromenv=rpc_bind_addresses
+--fromenv=log_dir
+
+--master_addresses={{master_addrs}}
+--fs_wal_dir={{master_fs_wal_dir}}
+--fs_data_dirs={{master_fs_data_dir}}
+--block_cache_capacity_mb={{master_block_cache_capacity}}
+--log_force_fsync_all={{log_force_fsync}}
+--webserver_port = {{master_webserver_port}}
+--maintenance_manager_num_threads = {{master_maintenance_manager_threads}}
+--memory_limit_hard_bytes = {{master_memory_limit_hard_bytes}}
+--max_log_size = {{master_max_log_size}}
+--default_num_replicas = {{default_num_replicas}}
+--master_ts_rpc_timeout_ms = {{master_ts_rpc_timeout_ms}}
+--max_create_tablets_per_ts = {{max_create_tablets_per_ts}}
+--rpc_max_message_size = {{rpc_max_message_size}}
+
+LIBHDFS_OPTS=-Djava.library.path=/usr/lib/impala/lib

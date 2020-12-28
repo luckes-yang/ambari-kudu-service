@@ -1,0 +1,20 @@
+# Do not modify these two lines. If you wish to change these variables,
+# modify them in /etc/default/kudu-tserver.
+--fromenv=rpc_bind_addresses
+--fromenv=log_dir
+
+--tserver_master_addrs={{master_addrs}}
+
+--webserver_port={{tserver_webserver_port}}
+--fs_wal_dir={{tserver_fs_wal_dir}}
+--fs_data_dirs={{tserver_fs_data_dir}}
+--block_cache_capacity_mb={{tserver_block_cache_capacity}}
+--log_force_fsync_all={{log_force_fsync}}
+--maintenance_manager_num_threads={{tserver_maintenance_manager_threads}}
+--memory_limit_hard_bytes={{tserver_memory_limit_hard_bytes}}
+--rpc_default_keepalive_time_ms={{master_rpc_keepalive_time}}
+--rpc_max_message_size={{rpc_max_message_size}}
+--rpc_num_service_threads={{tserver_rpc_service_threads}}
+--rpc_service_queue_length={{tserver_rpc_service_queue_length}}
+--num_reactor_threads={{tserver_reactor_threads}}
+--heartbeat_rpc_timeout={{tserver_heartbeat_rpc_timeout}}
