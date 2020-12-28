@@ -1,6 +1,6 @@
 from resource_management import *
 import os
-from kudu_base import KuduBase
+from kudu-base import KuduBase
 
 class KuduTserver(KuduBase):
     def install(self, env):
