@@ -7,7 +7,7 @@
             <name>KUDU</name>
             <displayName>Kudu</displayName>
             <comment>A new addition to the open source Apache Hadoop ecosystem, Apache Kudu completes Hadoop's storage layer to enable fast analytics on fast data.</comment>
-            <version>1.13.0</version>
+            <version>1.7.0</version>
             <components>
                 <component>
                     <name>KUDU_MASTER</name>
