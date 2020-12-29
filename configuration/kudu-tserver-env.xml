@@ -10,20 +10,6 @@
         <description>block cache capacity in MB</description>
     </property>
     <property>
-        <name>builtin_ntp_servers</name>
-        <value>0.pool.ntp.org,1.pool.ntp.org,2.pool.ntp.org,3.pool.ntp.org</value>
-        <default>0.pool.ntp.org,1.pool.ntp.org,2.pool.ntp.org,3.pool.ntp.org</default>
-        <tags>stable</tags>
-        <description>The NTP servers used by the built-in NTP client, in format &lt;FQDN|IP&gt;[:PORT]. These will only be used if the built-in NTP client is enabled (i.e. if setting --time_source=builtin).</description>
-    </property>
-    <property>
-        <name>time_source</name>
-        <value>system</value>
-        <default>system</default>
-        <tags>stable</tags>
-        <description>The time source that HybridClock should use. Must be one of auto, builtin, system, system_unsync (toy clusters/testing only), mock (testing only). When set to auto, the system automatically picks one of the following depending on the environment: builtin, system, system_unsync, where in case of picking builtin the built-in NTP client is configured with dedicated NTP server(s) provided by the environment.</description>
-    </property>
-    <property>
         <name>log_force_fsync_all</name>
         <value>false</value>
         <default>false</default>
@@ -52,18 +38,18 @@
         <description>Directory with write-ahead logs. If this is not specified, the program will not start. May be the same as fs_data_dirs</description>
     </property>
     <property>
+        <name>rpc_bind_addresses</name>
+        <value>0.0.0.0</value>
+        <default>0.0.0.0</default>
+        <tags>stable</tags>
+        <description>Comma-separated list of addresses to bind to for RPC connections. Currently, ephemeral ports (i.e. port 0) are not allowed.</description>
+    </property>
+    <property>
         <name>keytab_file</name>
         <value>none</value>
         <default>none</default>
         <tags>stable</tags>
         <description>Path to the Kerberos Keytab file for this server. Specifying a keytab file will cause the server to kinit, and enable Kerberos to be used to authenticate RPC connections.</description>
-    </property>
-    <property>
-        <name>rpc_bind_addresses</name>
-        <value>0.0.0.0:7050</value>
-        <default>0.0.0.0:7050</default>
-        <tags>stable</tags>
-        <description>Comma-separated list of addresses to bind to for RPC connections. Currently, ephemeral ports (i.e. port 0) are not allowed.</description>
     </property>
     <property>
         <name>superuser_acl</name>
@@ -88,8 +74,8 @@
     </property>
     <property>
         <name>webserver_port</name>
-        <value>8050</value>
-        <default>8050</default>
+        <value>0</value>
+        <default>0</default>
         <tags>stable</tags>
         <description>Port to bind to for the web server</description>
     </property>
@@ -106,13 +92,6 @@
         <default>none</default>
         <tags>stable</tags>
         <description>A Unix command whose output returns the password used to decrypt the Webserver’s certificate private key file specified in --webserver_private_key_file. If the PEM key file is not password-protected, this flag does not need to be set. Trailing whitespace will be trimmed before it is used to decrypt the private key</description>
-    </property>
-    <property>
-        <name>webserver_require_spnego</name>
-        <value>false</value>
-        <default>false</default>
-        <tags>stable</tags>
-        <description>Require connections to the web server to authenticate via Kerberos using SPNEGO.</description>
     </property>
     <property>
         <name>tserver_master_addrs</name>
@@ -192,13 +171,6 @@
         <description>approx. maximum log file size (in MB). A value of 0 will be silently overridden to 1.</description>
     </property>
     <property>
-        <name>tablet_history_max_age_sec</name>
-        <value>604800</value>
-        <default>604800</default>
-        <tags>stable,advanced</tags>
-        <description>Number of seconds to retain tablet history, including history required to perform diff scans and incremental backups. Reads initiated at a snapshot that is older than this age will be rejected. To disable history removal, set to -1.</description>
-    </property>
-    <property>
         <name>enable_process_lifetime_heap_profiling</name>
         <value>false</value>
         <default>false</default>
@@ -210,7 +182,7 @@
         <value>none</value>
         <default>none</default>
         <tags>advanced,stable</tags>
-        <description>Output path to store heap profiles. If not set profiles are stored in /tmp/&lt;lprocess-name&gt;.&lt;pid&gt;.&lt;n&gt;.heap.</description>
+        <description>Output path to store heap profiles. If not set profiles are stored in /tmp/&lt;process-name&gt;.&lt;pid&gt;.&lt;n&gt;.heap.</description>
     </property>
     <property>
         <name>unlock_experimental_flags</name>
@@ -321,7 +293,7 @@
         <name>symbolize_stacktrace</name>
         <value>true</value>
         <default>true</default>
-        <tags>runtime,advanced,stable</tags>
+        <tags>advanced,runtime,stable</tags>
         <description>Symbolize the stack trace in the tombstone</description>
     </property>
     <property>
@@ -339,12 +311,6 @@
         <description>per-module verbose level. Argument is a comma-separated list of &lt;module name&gt;=&lt;log level&gt;. &lt;module name&gt; is a glob pattern, matched against the filename base (that is, name ignoring .cc/.h./-inl.h). &lt;log level&gt; overrides any value given by --v.</description>
     </property>
     <property>
-        <name>block_cache_type</name>
-        <value>DRAM</value>
-        <default>DRAM</default>
-        <description>Which type of block cache to use for caching data. Valid choices are 'DRAM' or 'NVM'. DRAM, the default, caches data in regular memory. 'NVM' caches data in a memory-mapped file using the memkind library. To use 'NVM', libmemkind 1.8.0 or newer must be available on the system; otherwise Kudu will crash.</description>
-    </property>
-    <property>
         <name>cfile_verify_checksums</name>
         <value>true</value>
         <default>true</default>
@@ -360,8 +326,8 @@
     </property>
     <property>
         <name>cfile_default_compression_codec</name>
-        <value>no_compression</value>
-        <default>no_compression</default>
+        <value>none</value>
+        <default>none</default>
         <tags>advanced</tags>
         <description>Default cfile block compression codec.</description>
     </property>
@@ -373,60 +339,11 @@
         <description>Write CRC32 checksums for each block</description>
     </property>
     <property>
-        <name>builtin_ntp_client_bind_address</name>
-        <value>0.0.0.0</value>
-        <default>0.0.0.0</default>
-        <tags>advanced</tags>
-        <description>Local address to bind client UDP socket used to send and receive NTP packets. The default value '0.0.0.0' is equivalent to '0.0.0.0:0' meaning 'bind to all available IPv4 interfaces using ephemeral ports (i.e. port 0)'. It might be useful to customize this flag if getting through a firewall to reach public NTP servers specified by --builtin_ntp_servers.</description>
-    </property>
-    <property>
-        <name>builtin_ntp_poll_interval_ms</name>
-        <value>16000</value>
-        <default>16000</default>
-        <tags>runtime,advanced</tags>
-        <description>The time between successive polls of a single NTP server (in milliseconds)</description>
-    </property>
-    <property>
         <name>max_clock_sync_error_usec</name>
         <value>10000000</value>
         <default>10000000</default>
         <tags>runtime,advanced</tags>
         <description>Maximum allowed clock synchronization error as reported by NTP before the server will abort.</description>
-    </property>
-    <property>
-        <name>ntp_initial_sync_wait_secs</name>
-        <value>60</value>
-        <default>60</default>
-        <tags>evolving,advanced</tags>
-        <description>Amount of time in seconds to wait for clock synchronisation at startup. A value of zero means Kudu will fail to start if the clock is unsynchronized. This flag can prevent Kudu from crashing if it starts before NTP can synchronize the clock.</description>
-    </property>
-    <property>
-        <name>predicate_effectivess_enabled</name>
-        <value>true</value>
-        <default>true</default>
-        <tags>runtime,advanced</tags>
-        <description>Should ineffective predicate filtering be disabled</description>
-    </property>
-    <property>
-        <name>predicate_effectivess_num_skip_blocks</name>
-        <value>128</value>
-        <default>128</default>
-        <tags>runtime,advanced</tags>
-        <description>Number of blocks to skip for every predicate effectiveness check</description>
-    </property>
-    <property>
-        <name>predicate_effectivess_reject_ratio</name>
-        <value>0.10000000000000001</value>
-        <default>0.10000000000000001</default>
-        <tags>runtime,advanced</tags>
-        <description>Rejection ratio below which predicate filter is considered ineffective</description>
-    </property>
-    <property>
-        <name>cmeta_force_fsync</name>
-        <value>false</value>
-        <default>false</default>
-        <tags>advanced</tags>
-        <description>Whether fsync() should be called when consensus metadata files are updated</description>
     </property>
     <property>
         <name>consensus_rpc_timeout_ms</name>
@@ -446,22 +363,15 @@
         <name>follower_unavailable_considered_failed_sec</name>
         <value>300</value>
         <default>300</default>
-        <tags>runtime,advanced</tags>
+        <tags>advanced</tags>
         <description>Seconds that a leader is unable to successfully heartbeat to a follower after which the follower is considered to be failed and evicted from the config.</description>
     </property>
     <property>
         <name>fs_wal_dir_reserved_bytes</name>
         <value>-1</value>
         <default>-1</default>
-        <tags>runtime</tags>
+        <tags>evolving,runtime</tags>
         <description>Number of bytes to reserve on the log directory filesystem for non-Kudu usage. The default, which is represented by -1, is that 1% of the disk space on each disk will be reserved. Any other value specified represents the number of bytes reserved and must be greater than or equal to 0. Explicit percentages to reserve are not currently supported</description>
-    </property>
-    <property>
-        <name>fs_wal_use_file_cache</name>
-        <value>true</value>
-        <default>true</default>
-        <tags>advanced,runtime</tags>
-        <description>Whether to use the server-wide file cache for WAL segments and WAL index chunks.</description>
     </property>
     <property>
         <name>group_commit_queue_size_bytes</name>
@@ -541,18 +451,18 @@
         <description>Whether to enable the advancement of "safe" time in the absense of write operations</description>
     </property>
     <property>
-        <name>fs_data_dirs_available_space_cache_seconds</name>
-        <value>10</value>
-        <default>10</default>
+        <name>block_manager_max_open_files</name>
+        <value>-1</value>
+        <default>-1</default>
         <tags>evolving,advanced</tags>
-        <description>Number of seconds we cache the available disk space in the block manager.</description>
+        <description>Maximum number of open file descriptors to be used for data blocks. If -1, Kudu will use 40% of its resource limit as per getrlimit(). This is a soft limit. It is an error to use a value of 0.</description>
     </property>
     <property>
-        <name>fs_data_dirs_consider_available_space</name>
-        <value>true</value>
-        <default>true</default>
-        <tags>evolving,runtime</tags>
-        <description>Whether to consider available space when selecting a data directory during tablet or data block creation.</description>
+        <name>fs_data_dirs_full_disk_cache_seconds</name>
+        <value>30</value>
+        <default>30</default>
+        <tags>evolving,advanced</tags>
+        <description>Number of seconds we cache the full-disk status in the block manager. During this time, writes to the corresponding root path will not be attempted.</description>
     </property>
     <property>
         <name>fs_data_dirs_reserved_bytes</name>
@@ -560,13 +470,6 @@
         <default>-1</default>
         <tags>evolving,runtime</tags>
         <description>Number of bytes to reserve on each data directory filesystem for non-Kudu usage. The default, which is represented by -1, is that 1% of the disk space on each disk will be reserved. Any other value specified represents the number of bytes reserved and must be greater than or equal to 0. Explicit percentages to reserve are not currently supported</description>
-    </property>
-    <property>
-        <name>fs_max_thread_count_per_data_dir</name>
-        <value>8</value>
-        <default>8</default>
-        <tags>advanced</tags>
-        <description>Maximum work thread per data directory.</description>
     </property>
     <property>
         <name>fs_target_data_dirs_per_tablet</name>
@@ -577,10 +480,10 @@
     </property>
     <property>
         <name>block_manager</name>
-        <value>log</value>
-        <default>log</default>
+        <value>file</value>
+        <default>file</default>
         <tags>advanced</tags>
-        <description>Which block manager to use for storage. Valid options are 'file' and 'log'. The file block manager is not suitable for production use due to scaling limitations.</description>
+        <description>Which block manager to use for storage. Only the file block manager is supported for non-Linux systems.</description>
     </property>
     <property>
         <name>log_container_excess_space_before_cleanup_fraction</name>
@@ -615,7 +518,7 @@
         <value>-1</value>
         <default>-1</default>
         <tags>evolving,advanced</tags>
-        <description>Maximum number of threads to allow in each server-wide thread pool. If -1, Kudu will automatically calculate this value. It is an error to use a value of 0.</description>
+        <description>Maximum number of threads to allow in each server-wide thread pool. If -1, Kudu will use 10% of its running thread per effective uid resource limit as per getrlimit(). It is an error to use a value of 0.</description>
     </property>
     <property>
         <name>rpc_acceptor_listen_backlog</name>
@@ -637,27 +540,6 @@
         <default>100000000</default>
         <tags>runtime,advanced</tags>
         <description>The maximum number of cycles for which an RPC callback should be allowed to run without emitting a warning. (Advanced debugging option)</description>
-    </property>
-    <property>
-        <name>tcp_keepalive_probe_period_s</name>
-        <value>60</value>
-        <default>60</default>
-        <tags>advanced</tags>
-        <description>The duration in seconds after an outbound connection has gone idle before a TCP keepalive probe is sent to the peer. Set to 0 to disable TCP keepalive probes from being sent.</description>
-    </property>
-    <property>
-        <name>tcp_keepalive_retry_count</name>
-        <value>10</value>
-        <default>10</default>
-        <tags>advanced</tags>
-        <description>The maximum number of keepalive probes sent before declaring the remote end as dead. Effective only if --tcp_keepalive_probe_period_s is not 0.</description>
-    </property>
-    <property>
-        <name>tcp_keepalive_retry_period_s</name>
-        <value>3</value>
-        <default>3</default>
-        <tags>advanced</tags>
-        <description>The duration in seconds between successive keepalive probes from an outbound connection if the previous probes are not acknowledged. Effective only if --tcp_keepalive_probe_period_s is not 0.</description>
     </property>
     <property>
         <name>remember_clients_ttl_ms</name>
@@ -703,17 +585,10 @@
     </property>
     <property>
         <name>use_system_auth_to_local</name>
-        <value>true</value>
-        <default>true</default>
+        <value>false</value>
+        <default>false</default>
         <tags>advanced</tags>
         <description>When enabled, use the system krb5 library to map Kerberos principal names to local (short) usernames. If not enabled, the first component of the principal will be used as the short name. For example, 'kudu/foo.example.com@EXAMPLE' will map to 'kudu'.</description>
-    </property>
-    <property>
-        <name>metrics_default_level</name>
-        <value>debug</value>
-        <default>debug</default>
-        <tags>evolving,runtime,advanced</tags>
-        <description>The default severity level to use when filtering the metrics. Valid choices are 'debug', 'info', and 'warn'. The levels are ordered and lower levels include the levels above them. This value can be overridden by passing the level query parameter to the '/metrics' endpoint.</description>
     </property>
     <property>
         <name>web_log_bytes</name>
@@ -738,8 +613,8 @@
     </property>
     <property>
         <name>rpc_num_service_threads</name>
-        <value>20</value>
-        <default>20</default>
+        <value>10</value>
+        <default>10</default>
         <tags>advanced</tags>
         <description>Number of RPC worker threads to run</description>
     </property>
@@ -749,13 +624,6 @@
         <default>50</default>
         <tags>advanced</tags>
         <description>Default length of queue for incoming RPC requests</description>
-    </property>
-    <property>
-        <name>gc_tcmalloc_memory_interval_seconds</name>
-        <value>30</value>
-        <default>30</default>
-        <tags>runtime,advanced</tags>
-        <description>Interval seconds to GC tcmalloc memory, 0 means disabled.</description>
     </property>
     <property>
         <name>max_negotiation_threads</name>
@@ -825,13 +693,6 @@
         <default>TLSv1</default>
         <tags>advanced</tags>
         <description>The minimum protocol version to allow when for securing RPC connections with TLS. May be one of 'TLSv1', 'TLSv1.1', or 'TLSv1.2'.</description>
-    </property>
-    <property>
-        <name>server_max_open_files</name>
-        <value>0</value>
-        <default>0</default>
-        <tags>advanced</tags>
-        <description>Maximum number of open file descriptors. If 0, Kudu will automatically calculate this value. This is a soft limit</description>
     </property>
     <property>
         <name>webserver_enabled</name>
@@ -926,15 +787,14 @@
         <name>compaction_minimum_improvement</name>
         <value>0.0099999997764825821</value>
         <default>0.0099999997764825821</default>
-        <tags>advanced</tags>
         <description>The minimum quality for a compaction to run. If a compaction does not improve the average height of DiskRowSets by at least this amount, the compaction will be considered ineligible.</description>
     </property>
     <property>
-        <name>tablet_transaction_memory_limit_mb</name>
-        <value>64</value>
-        <default>64</default>
-        <tags>advanced</tags>
-        <description>Maximum amount of memory that may be consumed by all in-flight ops belonging to a particular tablet. When this limit is reached, new ops will be rejected and clients will be forced to retry them. If -1, op memory tracking is disabled.</description>
+        <name>enable_undo_delta_block_gc</name>
+        <value>true</value>
+        <default>true</default>
+        <tags>evolving</tags>
+        <description>Whether to enable undo delta block garbage collection. This only affects the undo delta block deletion background task, and doesn’t control whether compactions delete ancient history. To change what is considered ancient history use --tablet_history_max_age_sec</description>
     </property>
     <property>
         <name>tablet_bloom_block_size</name>
@@ -951,11 +811,11 @@
         <description>Target false-positive rate (between 0 and 1) to size tablet key bloom filters. A lower false positive rate may reduce the number of disk seeks required in heavy insert workloads, at the expense of more space and RAM required for bloom filters.</description>
     </property>
     <property>
-        <name>enable_deleted_rowset_gc</name>
-        <value>true</value>
-        <default>true</default>
-        <tags>runtime</tags>
-        <description>Whether to enable garbage collection of fully deleted rowsets. Disabling deleted rowset garbage collection may increase disk space usage for workloads that involve a high number of deletes. Only deleted rowsets that are entirely considered ancient history (see --tablet_history_max_age_sec) are deleted.</description>
+        <name>tablet_history_max_age_sec</name>
+        <value>900</value>
+        <default>900</default>
+        <tags>advanced</tags>
+        <description>Number of seconds to retain tablet history. Reads initiated at a snapshot that is older than this age will be rejected. To disable history removal, set to -1.</description>
     </property>
     <property>
         <name>undo_delta_block_gc_init_budget_millis</name>
@@ -963,6 +823,13 @@
         <default>1000</default>
         <tags>advanced,evolving</tags>
         <description>The maximum number of milliseconds we will spend initializing UNDO delta blocks per invocation of UndoDeltaBlockGCOp. Existing delta blocks must be initialized once per process startup to determine when they can be deleted.</description>
+    </property>
+    <property>
+        <name>tablet_transaction_memory_limit_mb</name>
+        <value>64</value>
+        <default>64</default>
+        <tags>advanced</tags>
+        <description>Maximum amount of memory that may be consumed by all in-flight transactions belonging to a particular tablet. When this limit is reached, new transactions will be rejected and clients will be forced to retry them. If -1, transaction memory tracking is disabled.</description>
     </property>
     <property>
         <name>heartbeat_incompatible_replica_management_is_fatal</name>
@@ -996,15 +863,8 @@
         <name>scanner_ttl_ms</name>
         <value>60000</value>
         <default>60000</default>
-        <tags>runtime,advanced</tags>
-        <description>Number of milliseconds of inactivity allowed for a scannerbefore it may be expired</description>
-    </property>
-    <property>
-        <name>tablet_copy_begin_session_timeout_ms</name>
-        <value>30000</value>
-        <default>30000</default>
         <tags>advanced</tags>
-        <description>Tablet server RPC client timeout for BeginTabletCopySession calls. Also used for EndTabletCopySession calls.</description>
+        <description>Number of milliseconds of inactivity allowed for a scannerbefore it may be expired</description>
     </property>
     <property>
         <name>tablet_copy_idle_timeout_sec</name>
@@ -1014,16 +874,9 @@
         <description>Amount of time without activity before a tablet copy session will expire, in seconds</description>
     </property>
     <property>
-        <name>tablet_apply_pool_overload_threshold_ms</name>
-        <value>0</value>
-        <default>0</default>
-        <tags>advanced</tags>
-        <description>The threshold for the queue time of the 'apply' thread pool to enter and exit overloaded state. Once the queue stalls and its queue times become longer than the specified threshold, it enters the overloaded state. Tablet server rejects incoming write requests with some probability when its apply queue is overloaded. The longer the apply queue stays overloaded, the greater the probability of the rejection. In addition, the more row operations a write request has, the greater the probablity of the rejection. The apply queue exits the overloaded state when queue times drop below the specified threshold. Set this flag to 0 to disable the behavior described above.</description>
-    </property>
-    <property>
         <name>scanner_batch_size_rows</name>
-        <value>128</value>
-        <default>128</default>
+        <value>100</value>
+        <default>100</default>
         <tags>runtime,advanced</tags>
         <description>The number of rows to batch for servicing scan requests.</description>
     </property>
@@ -1046,14 +899,7 @@
         <value>1000</value>
         <default>1000</default>
         <tags>advanced</tags>
-        <description>The maximum amount of time (in milliseconds) we’ll hang a scanner thread waiting for safe time to advance or ops to commit, even if its deadline allows waiting longer.</description>
-    </property>
-    <property>
-        <name>tserver_enforce_access_control</name>
-        <value>false</value>
-        <default>false</default>
-        <tags>runtime</tags>
-        <description>If set, the server will apply fine-grained access control rules to client RPCs.</description>
+        <description>The maximum amount of time (in milliseconds) we’ll hang a scanner thread waiting for safe time to advance or transactions to commit, even if its deadline allows waiting longer.</description>
     </property>
     <property>
         <name>num_tablets_to_copy_simultaneously</name>
@@ -1061,13 +907,6 @@
         <default>10</default>
         <tags>advanced</tags>
         <description>Number of threads available to copy tablets from remote servers.</description>
-    </property>
-    <property>
-        <name>num_tablets_to_delete_simultaneously</name>
-        <value>0</value>
-        <default>0</default>
-        <tags>advanced</tags>
-        <description>Number of threads available to delete tablets. If this is set to 0 (the default), then the number of delete threads will be set based on the number of data directories. If the data directories are on some very fast storage device such as SSD or a RAID array, it may make sense to manually tune this.</description>
     </property>
     <property>
         <name>num_tablets_to_open_simultaneously</name>
@@ -1082,62 +921,6 @@
         <default>1000</default>
         <tags>advanced</tags>
         <description>Minimum amount of time in milliseconds between walks of the tablet map to update tablet state counts.</description>
-    </property>
-    <property>
-        <name>update_tablet_stats_interval_ms</name>
-        <value>5000</value>
-        <default>5000</default>
-        <tags>advanced</tags>
-        <description>Interval at which the tablet statistics should be updated.Should be greater than 'heartbeat_interval_ms'</description>
-    </property>
-    <property>
-        <name>cloud_aws_instance_id_url</name>
-        <value>http://169.254.169.254/latest/meta-data/instance-id</value>
-        <default>http://169.254.169.254/latest/meta-data/instance-id</default>
-        <tags>runtime,advanced</tags>
-        <description>The URL to fetch the identifier of an AWS instance</description>
-    </property>
-    <property>
-        <name>cloud_aws_ntp_server</name>
-        <value>169.254.169.123</value>
-        <default>169.254.169.123</default>
-        <tags>runtime,advanced</tags>
-        <description>IP address/FQDN of the internal NTP server to use from within an AWS instance</description>
-    </property>
-    <property>
-        <name>cloud_azure_instance_id_url</name>
-        <value>http://169.254.169.254/metadata/instance/compute/vmId?api-version=2018-10-01&amp;format=text</value>
-        <default>http://169.254.169.254/metadata/instance/compute/vmId?api-version=2018-10-01&amp;format=text</default>
-        <tags>runtime,advanced</tags>
-        <description>The URL to fetch the identifier of an Azure instance</description>
-    </property>
-    <property>
-        <name>cloud_gce_instance_id_url</name>
-        <value>http://metadata.google.internal/computeMetadata/v1/instance/id</value>
-        <default>http://metadata.google.internal/computeMetadata/v1/instance/id</default>
-        <tags>runtime,advanced</tags>
-        <description>The URL to fetch the identifier of a GCE instance</description>
-    </property>
-    <property>
-        <name>cloud_gce_ntp_server</name>
-        <value>metadata.google.internal</value>
-        <default>metadata.google.internal</default>
-        <tags>runtime,advanced</tags>
-        <description>IP address/FQDN of the internal NTP server to use from within a GCE instance</description>
-    </property>
-    <property>
-        <name>cloud_metadata_server_request_timeout_ms</name>
-        <value>1000</value>
-        <default>1000</default>
-        <tags>runtime,advanced</tags>
-        <description>Timeout for HTTP/HTTPS requests to the instance metadata server (in milliseconds)</description>
-    </property>
-    <property>
-        <name>cloud_openstack_metadata_url</name>
-        <value>http://169.254.169.254/openstack/latest/meta_data.json</value>
-        <default>http://169.254.169.254/openstack/latest/meta_data.json</default>
-        <tags>runtime,advanced</tags>
-        <description>The URL to fetch metadata of an OpenStack instance via Nova metadata service. OpenStack Nova metadata server does not provide a separate URL to fetch instance UUID, at least with 12.0.0 (Liberty) release.</description>
     </property>
     <property>
         <name>env_use_fsync</name>
@@ -1183,8 +966,8 @@
     </property>
     <property>
         <name>enable_minidumps</name>
-        <value>true</value>
-        <default>true</default>
+        <value>false</value>
+        <default>false</default>
         <tags>evolving,advanced</tags>
         <description>Whether to enable minidump generation upon process crash or SIGUSR1. Currently only supported on Linux systems.</description>
     </property>
@@ -1208,40 +991,6 @@
         <default>20480</default>
         <tags>evolving,advanced</tags>
         <description>Size limit hint for minidump files in KB. If a minidump exceeds this value, then breakpad will reduce the stack memory it collects for each thread from 8KB to 2KB. However it will always include the full stack memory for the first 20 threads, including the thread that crashed.</description>
-    </property>
-    <property>
-        <name>dns_resolver_cache_capacity_mb</name>
-        <value>1</value>
-        <default>1</default>
-        <tags>advanced</tags>
-        <description>Capacity of DNS resolver cache, in MiBytes. For each key, the cache stores records returned by getaddrinfo(). A value of 0 means the results of DNS name resolution are not cached.</description>
-    </property>
-    <property>
-        <name>dns_resolver_cache_ttl_sec</name>
-        <value>15</value>
-        <default>15</default>
-        <tags>advanced</tags>
-        <description>TTL of records in the DNS resolver cache, in seconds.</description>
-    </property>
-    <property>
-        <name>dns_resolver_max_threads_num</name>
-        <value>1</value>
-        <default>1</default>
-        <tags>advanced</tags>
-        <description>The maximum number of threads to use for async DNS resolution</description>
-    </property>
-    <property>
-        <name>nvm_cache_path</name>
-        <value>/pmem</value>
-        <default>/pmem</default>
-        <description>The path at which the NVM cache will try to allocate its memory. This can be a tmpfs or ramfs for testing purposes.</description>
-    </property>
-    <property>
-        <name>nvm_cache_usage_ratio</name>
-        <value>1.25</value>
-        <default>1.25</default>
-        <tags>advanced</tags>
-        <description>A ratio to set the usage of nvm cache. The charge of an item in the nvm cache is equal to the results of memkind_malloc_usable_size multiplied by the ratio.</description>
     </property>
     <property>
         <name>memory_limit_soft_percentage</name>
@@ -1270,13 +1019,6 @@
         <default>10</default>
         <tags>advanced</tags>
         <description>Maximum percentage of the RSS that tcmalloc is allowed to use for reserved but unallocated memory.</description>
-    </property>
-    <property>
-        <name>drop_log_memory</name>
-        <value>true</value>
-        <default>true</default>
-        <tags>runtime,advanced</tags>
-        <description>Drop in-memory buffers of log contents. Logs can grow very quickly and they are rarely read before they need to be evicted from memory. Instead, drop them from memory as soon as they are flushed to disk.</description>
     </property>
     <property>
         <name>log_backtrace_at</name>
