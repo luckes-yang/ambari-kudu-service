@@ -1096,4 +1096,389 @@
         <default>436</default>
         <description>Log file mode/permissions.</description>
     </property>
+    <property>
+        <name>tserver_master_addrs</name>
+        <value>127.0.0.1:7051</value>
+        <default>127.0.0.1:7051</default>
+        <tags>stable</tags>
+        <description>Comma separated addresses of the masters which the tablet server should connect to. The masters do not read this flag — configure the masters separately using 'rpc_bind_addresses'.</description>
+    </property>
+    <property>
+        <name>block_cache_type</name>
+        <value>DRAM</value>
+        <default>DRAM</default>
+        <tags>experimental</tags>
+        <description>Which type of block cache to use for caching data. Valid choices are 'DRAM' or 'NVM'. DRAM, the default, caches data in regular memory. 'NVM' caches data in a memory-mapped file using the NVML library.</description>
+    </property>
+    <property>
+        <name>min_compression_ratio</name>
+        <value>0.90000000000000002</value>
+        <default>0.90000000000000002</default>
+        <tags>experimental</tags>
+        <description>If a column compression codec is configured, but the codec is unable to achieve a compression ratio at least as good as the configured value, then the data will be written uncompressed. This will reduce CPU overhead on the read side at the expense of a small amount of extra space if the codec encounters portions of data that are not easily compressible.</description>
+    </property>
+    <property>
+        <name>time_source</name>
+        <value>system</value>
+        <default>system</default>
+        <tags>experimental</tags>
+        <description>The clock source that HybridClock should use. Must be one of 'system' or 'mock' (for tests only)</description>
+    </property>
+    <property>
+        <name>codegen_dump_functions</name>
+        <value>false</value>
+        <default>false</default>
+        <tags>runtime,experimental</tags>
+        <description>Whether to print the LLVM IR for generated functions</description>
+    </property>
+    <property>
+        <name>codegen_dump_mc</name>
+        <value>false</value>
+        <default>false</default>
+        <tags>runtime,experimental</tags>
+        <description>Whether to dump the disassembly of the machine code for generated functions.</description>
+    </property>
+    <property>
+        <name>codegen_cache_capacity</name>
+        <value>100</value>
+        <default>100</default>
+        <tags>experimental</tags>
+        <description>Number of entries which may be stored in the code generation cache.</description>
+    </property>
+    <property>
+        <name>codegen_time_compilation</name>
+        <value>false</value>
+        <default>false</default>
+        <tags>runtime,experimental</tags>
+        <description>Whether to print time that each code generation request took.</description>
+    </property>
+    <property>
+        <name>log_compression_codec</name>
+        <value>LZ4</value>
+        <default>LZ4</default>
+        <tags>experimental</tags>
+        <description>Codec to use for compressing WAL segments.</description>
+    </property>
+    <property>
+        <name>log_max_segments_to_retain</name>
+        <value>80</value>
+        <default>80</default>
+        <tags>experimental,advanced,runtime</tags>
+        <description>The maximum number of past log segments to keep at all times for the purposes of catching up other peers.</description>
+    </property>
+    <property>
+        <name>leader_failure_exp_backoff_max_delta_ms</name>
+        <value>20000</value>
+        <default>20000</default>
+        <tags>experimental</tags>
+        <description>Maximum time to sleep in between leader election retries, in addition to the regular timeout. When leader election fails the interval in between retries increases exponentially, up to this value.</description>
+    </property>
+    <property>
+        <name>raft_enable_pre_election</name>
+        <value>true</value>
+        <default>true</default>
+        <tags>runtime,experimental</tags>
+        <description>When enabled, candidates will call a pre-election before running a real leader election.</description>
+    </property>
+    <property>
+        <name>raft_enable_tombstoned_voting</name>
+        <value>true</value>
+        <default>true</default>
+        <tags>runtime,experimental</tags>
+        <description>When enabled, tombstoned tablets may vote in elections.</description>
+    </property>
+    <property>
+        <name>raft_prepare_replacement_before_eviction</name>
+        <value>true</value>
+        <default>true</default>
+        <tags>experimental,advanced</tags>
+        <description>When enabled, failed replicas will only be evicted after a replacement has been prepared for them.</description>
+    </property>
+    <property>
+        <name>missed_heartbeats_before_rejecting_snapshot_scans</name>
+        <value>1.5</value>
+        <default>1.5</default>
+        <tags>experimental</tags>
+        <description>The maximum raft heartbeat periods since the tablet has seen safe time advanced before refusing scans at snapshots that aren’t yet safe and forcing clients to try again.</description>
+    </property>
+    <property>
+        <name>safe_time_max_lag_ms</name>
+        <value>30000</value>
+        <default>30000</default>
+        <tags>experimental</tags>
+        <description>The maximum amount of time we allow safe time to lag behind the requested timestampbefore forcing the client to retry, in milliseconds.</description>
+    </property>
+    <property>
+        <name>block_manager_preflush_control</name>
+        <value>finalize</value>
+        <default>finalize</default>
+        <tags>experimental</tags>
+        <description>Controls when to pre-flush a block. Valid values are 'finalize', 'close', or 'never'. If 'finalize', blocks will be pre-flushed when writing is finished. If 'close', blocks will be pre-flushed when their transaction is committed. If 'never', blocks will never be pre-flushed but still be flushed when closed.</description>
+    </property>
+    <property>
+        <name>log_container_live_metadata_before_compact_ratio</name>
+        <value>0.5</value>
+        <default>0.5</default>
+        <tags>experimental</tags>
+        <description>Desired ratio of live block metadata in log containers. If a container’s live to total block ratio dips below this value, the container’s metadata file will be compacted at startup.</description>
+    </property>
+    <property>
+        <name>master_failover_catchup_timeout_ms</name>
+        <value>30000</value>
+        <default>30000</default>
+        <tags>experimental,advanced</tags>
+        <description>Amount of time to give a newly-elected leader master to load the previous master’s metadata and become active. If this time is exceeded, the node crashes.</description>
+    </property>
+    <property>
+        <name>authn_token_validity_seconds</name>
+        <value>604800</value>
+        <default>604800</default>
+        <tags>experimental</tags>
+        <description>Period of time for which an issued authentication token is valid. Clients will automatically attempt to reacquire a token after the validity period expires.</description>
+    </property>
+    <property>
+        <name>master_registration_rpc_timeout_ms</name>
+        <value>1500</value>
+        <default>1500</default>
+        <tags>experimental</tags>
+        <description>Timeout for retrieving master registration over RPC.</description>
+    </property>
+    <property>
+        <name>tsk_rotation_seconds</name>
+        <value>86400</value>
+        <default>86400</default>
+        <tags>experimental,advanced</tags>
+        <description>Number of seconds between consecutive activations of newly generated TSKs (Token Signing Keys).</description>
+    </property>
+    <property>
+        <name>ipki_ca_cert_expiration_seconds</name>
+        <value>315360000</value>
+        <default>315360000</default>
+        <tags>experimental</tags>
+        <description>validity interval for self-signed root CA certifcate issued by Kudu IPKI (Internal Private Key Infrastructure, a.k.a. Internal Kudu CA)</description>
+    </property>
+    <property>
+        <name>ipki_ca_key_size</name>
+        <value>2048</value>
+        <default>2048</default>
+        <tags>experimental</tags>
+        <description>the number of bits for self-signed root CA cert used by Kudu IPKI (Internal Private Key Infrastructure, a.k.a. Internal Kudu CA)</description>
+    </property>
+    <property>
+        <name>ipki_server_cert_expiration_seconds</name>
+        <value>315360000</value>
+        <default>315360000</default>
+        <tags>experimental</tags>
+        <description>validity interval for server certificates issued by Kudu IPKI (Internal Private Key Infrastructure, a.k.a. Internal Kudu CA)</description>
+    </property>
+    <property>
+        <name>rpc_trace_negotiation</name>
+        <value>false</value>
+        <default>false</default>
+        <tags>experimental,advanced,runtime</tags>
+        <description>If enabled, dump traces of all RPC negotiations to the log</description>
+    </property>
+    <property>
+        <name>ipki_server_key_size</name>
+        <value>2048</value>
+        <default>2048</default>
+        <tags>experimental</tags>
+        <description>the number of bits for server cert’s private key. The server cert is used for TLS connections to and from clients and other servers.</description>
+    </property>
+    <property>
+        <name>tsk_num_rsa_bits</name>
+        <value>2048</value>
+        <default>2048</default>
+        <tags>experimental</tags>
+        <description>Number of bits in RSA keys used for token signing.</description>
+    </property>
+    <property>
+        <name>diagnostics_log_stack_traces_interval_ms</name>
+        <value>60000</value>
+        <default>60000</default>
+        <tags>experimental,runtime</tags>
+        <description>The interval at which the server will a snapshot of its thread stacks to the diagnostics log. In fact, the server will log at a random interval betweeen zero and twice the configured value to avoid biasing samples towards periodic processes which happen exactly on some particular schedule. If this is set to 0, stack traces will be not be periodically logged.</description>
+    </property>
+    <property>
+        <name>rpc_ca_certificate_file</name>
+        <value>none</value>
+        <default>none</default>
+        <tags>experimental</tags>
+        <description>Path to the PEM encoded X509 certificate of the trusted external certificate authority. The provided certificate should be the root issuer of the certificate passed in '--rpc_certificate_file'.</description>
+    </property>
+    <property>
+        <name>rpc_certificate_file</name>
+        <value>none</value>
+        <default>none</default>
+        <tags>experimental</tags>
+        <description>Path to a PEM encoded X509 certificate to use for securing RPC connections with SSL/TLS. If set, '--rpc_private_key_file' and '--rpc_ca_certificate_file' must be set as well.</description>
+    </property>
+    <property>
+        <name>rpc_private_key_file</name>
+        <value>none</value>
+        <default>none</default>
+        <tags>experimental</tags>
+        <description>Path to a PEM encoded private key paired with the certificate from '--rpc_certificate_file'</description>
+    </property>
+    <property>
+        <name>budgeted_compaction_target_rowset_size</name>
+        <value>33554432</value>
+        <default>33554432</default>
+        <tags>advanced,experimental</tags>
+        <description>The target size for DiskRowSets during flush/compact when the budgeted compaction policy is used</description>
+    </property>
+    <property>
+        <name>compaction_approximation_ratio</name>
+        <value>1.0499999523162842</value>
+        <default>1.0499999523162842</default>
+        <tags>experimental</tags>
+        <description>Approximation ratio allowed for optimal compaction calculation. A value of 1.05 indicates that the policy may use an approximate result if it is known to be within 5% of the optimal solution.</description>
+    </property>
+    <property>
+        <name>deltafile_default_block_size</name>
+        <value>32768</value>
+        <default>32768</default>
+        <tags>experimental</tags>
+        <description>Block size for delta files. In the future, this may become configurable on a per-table basis.</description>
+    </property>
+    <property>
+        <name>deltafile_default_compression_codec</name>
+        <value>lz4</value>
+        <default>lz4</default>
+        <tags>experimental</tags>
+        <description>The compression codec used when writing deltafiles.</description>
+    </property>
+    <property>
+        <name>default_composite_key_index_block_size_bytes</name>
+        <value>4096</value>
+        <default>4096</default>
+        <tags>experimental</tags>
+        <description>Block size used for composite key indexes.</description>
+    </property>
+    <property>
+        <name>tablet_delta_store_major_compact_min_ratio</name>
+        <value>0.10000000149011612</value>
+        <default>0.10000000149011612</default>
+        <tags>experimental</tags>
+        <description>Minimum ratio of sizeof(deltas) to sizeof(base data) before a major compaction can run (Advanced option)</description>
+    </property>
+    <property>
+        <name>tablet_delta_store_minor_compact_max</name>
+        <value>1000</value>
+        <default>1000</default>
+        <tags>experimental</tags>
+        <description>How many delta stores are required before forcing a minor delta compaction (Advanced option)</description>
+    </property>
+    <property>
+        <name>tablet_compaction_budget_mb</name>
+        <value>128</value>
+        <default>128</default>
+        <tags>experimental</tags>
+        <description>Budget for a single compaction</description>
+    </property>
+    <property>
+        <name>tablet_throttler_burst_factor</name>
+        <value>1</value>
+        <default>1</default>
+        <tags>experimental</tags>
+        <description>Burst factor for write RPC throttling. The maximum rate the throttler allows within a token refill period (100ms) equals burst factor multiply base rate.</description>
+    </property>
+    <property>
+        <name>tablet_throttler_bytes_per_sec</name>
+        <value>0</value>
+        <default>0</default>
+        <tags>experimental</tags>
+        <description>Maximum write RPC IO rate (byte/s) allowed for a tablet, write RPC exceeding this limit will be throttled. 0 means no limit.</description>
+    </property>
+    <property>
+        <name>tablet_throttler_rpc_per_sec</name>
+        <value>0</value>
+        <default>0</default>
+        <tags>experimental</tags>
+        <description>Maximum write RPC rate (op/s) allowed for a tablet, write RPC exceeding this limit will be throttled. 0 means no limit.</description>
+    </property>
+    <property>
+        <name>flush_threshold_mb</name>
+        <value>1024</value>
+        <default>1024</default>
+        <tags>experimental</tags>
+        <description>Size at which MemRowSet flushes are triggered. A MRS can still flush below this threshold if it if hasn’t flushed in a while, or if the server-wide memory limit has been reached.</description>
+    </property>
+    <property>
+        <name>flush_threshold_secs</name>
+        <value>120</value>
+        <default>120</default>
+        <tags>experimental</tags>
+        <description>Number of seconds after which a non-empty MemRowSet will become flushable even if it is not large.</description>
+    </property>
+    <property>
+        <name>scan_history_count</name>
+        <value>20</value>
+        <default>20</default>
+        <tags>experimental</tags>
+        <description>Number of completed scans to keep history for. Determines how many historical scans will be shown on the tablet server’s scans dashboard.</description>
+    </property>
+    <property>
+        <name>trace_to_console</name>
+        <value>none</value>
+        <default>none</default>
+        <tags>experimental</tags>
+        <description>Trace pattern specifying which trace events should be dumped directly to the console</description>
+    </property>
+    <property>
+        <name>crash_on_eio</name>
+        <value>false</value>
+        <default>false</default>
+        <tags>experimental,advanced</tags>
+        <description>Kill the process if an I/O operation results in EIO. If false, I/O resulting in EIOs will return the status IOError and leave error-handling up to the caller.</description>
+    </property>
+    <property>
+        <name>env_use_ioctl_hole_punch_on_xfs</name>
+        <value>true</value>
+        <default>true</default>
+        <tags>experimental,advanced</tags>
+        <description>Use the XFS_IOC_UNRESVSP64 ioctl instead of fallocate(2) to punch holes on XFS filesystems.</description>
+    </property>
+    <property>
+        <name>heap_sample_every_n_bytes</name>
+        <value>0</value>
+        <default>0</default>
+        <tags>experimental,advanced</tags>
+        <description>Enable heap occupancy sampling. If this flag is set to some positive value N, a memory allocation will be sampled approximately every N bytes. Lower values of N incur larger overhead but give more accurate results. A value such as 524288 (512KB) is a reasonable choice with relatively low overhead.</description>
+    </property>
+    <property>
+        <name>max_log_files</name>
+        <value>10</value>
+        <default>10</default>
+        <tags>experimental,runtime</tags>
+        <description>Maximum number of log files to retain per severity level. The most recent log files are retained. If set to 0, all log files are retained.</description>
+    </property>
+    <property>
+        <name>data_gc_min_size_mb</name>
+        <value>0</value>
+        <default>0</default>
+        <tags>experimental</tags>
+        <description>The (exclusive) minimum number of megabytes of ancient data on disk, per tablet, needed to prioritize deletion of that data.</description>
+    </property>
+    <property>
+        <name>data_gc_prioritization_prob</name>
+        <value>0.5</value>
+        <default>0.5</default>
+        <tags>experimental</tags>
+        <description>The probability that we will prioritize data GC over performance improvement operations. If set to 1.0, we will always prefer to delete old data before running performance improvement operations such as delta compaction.</description>
+    </property>
+    <property>
+        <name>log_target_replay_size_mb</name>
+        <value>1024</value>
+        <default>1024</default>
+        <tags>experimental</tags>
+        <description>The target maximum size of logs to be replayed at startup. If a tablet has in-memory operations that are causing more than this size of logs to be retained, then the maintenance manager will prioritize flushing these operations to disk.</description>
+    </property>
+    <property>
+        <name>local_ip_for_outbound_sockets</name>
+        <value>none</value>
+        <default>none</default>
+        <tags>experimental</tags>
+        <description>IP to bind to when making outgoing socket connections. This must be an IP address of the form A.B.C.D, not a hostname. Advanced parameter, subject to change.</description>
+    </property>
 </configuration>
