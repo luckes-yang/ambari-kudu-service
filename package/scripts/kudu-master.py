@@ -1,6 +1,6 @@
 from resource_management import *
 import os
-from kudu-base import KuduBase
+from kudu_base import KuduBase
 
 class KuduMaster(KuduBase):
     def install(self, env):
@@ -34,6 +34,7 @@ class KuduMaster(KuduBase):
              content=Template("kudu_master.j2", realm_name=realm_name),
              mode=0o644
              )
+
 
 if __name__ == "__main__":
     KuduMaster().execute()
