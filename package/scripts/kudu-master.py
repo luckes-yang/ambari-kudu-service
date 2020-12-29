@@ -2,6 +2,7 @@ from resource_management import *
 import os
 from kudu_base import KuduBase
 
+
 class KuduMaster(KuduBase):
     def install(self, env):
         self.install_packages(env)
