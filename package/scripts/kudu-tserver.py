@@ -1,6 +1,7 @@
 from resource_management import *
 import os
-from kudu-base import KuduBase
+from kudu_base import KuduBase
+
 
 class KuduTserver(KuduBase):
     def install(self, env):
@@ -34,6 +35,7 @@ class KuduTserver(KuduBase):
              content=Template("kudu_tserver.j2", realm_name=realm_name),
              mode=0o644
              )
+
 
 if __name__ == "__main__":
     KuduTserver().execute()
