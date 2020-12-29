@@ -17,7 +17,7 @@
                     <commandScript>
                         <script>scripts/kudu-master.py</script>
                         <scriptType>PYTHON</scriptType>
-                        <timeout>5000</timeout>
+                        <timeout>10000</timeout>
                     </commandScript>
                 </component>
                 <component>
@@ -28,7 +28,7 @@
                     <commandScript>
                         <script>scripts/kudu-tserver.py</script>
                         <scriptType>PYTHON</scriptType>
-                        <timeout>5000</timeout>
+                        <timeout>10000</timeout>
                     </commandScript>
                 </component>
             </components>
