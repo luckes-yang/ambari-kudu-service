@@ -42,7 +42,7 @@ ambari-server restart
 略
 #### 5.效果截图
 版本效果：<br>
-![版本](./images/版本.png)
+![版本](images/version.png)
 summary:
 ![summary](images/总览.png)
 configuration:
