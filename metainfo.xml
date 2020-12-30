@@ -37,9 +37,9 @@
                     <osFamily>any</osFamily>
                 </osSpecific>
             </osSpecifics>
-            <requiredServices>
-                <service>IMPALA</service>
-            </requiredServices>
+<!--            <requiredServices>-->
+<!--                <service>IMPALA</service>-->
+<!--            </requiredServices>-->
             <configuration-dependencies>
                 <config-type>kudu-master-env</config-type>
                 <config-type>kudu-tserver-env</config-type>
@@ -50,6 +50,7 @@
                     <default>true</default>
                 </quickLinksConfiguration>
             </quickLinksConfigurations>
+            <restartRequiredAfterChange>true</restartRequiredAfterChange>
         </service>
     </services>
 </metainfo>
