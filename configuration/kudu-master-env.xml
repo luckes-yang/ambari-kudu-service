@@ -1,7 +1,21 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 
-<configuration supports_adding_forbidden="true">
+<configuration supports_final="true" supports_do_not_extend="true" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <property>
+        <name>fs_wal_dir</name>
+        <value>/data/kudu/master</value>
+        <default>none</default>
+        <tags>stable</tags>
+        <description>Directory with write-ahead logs. If this is not specified, the program will not start. May be the same as fs_data_dirs</description>
+    </property>
+    <property>
+        <name>log_dir</name>
+        <value>/var/log/kudu</value>
+        <default>none</default>
+        <tags>stable</tags>
+        <description>If specified, logfiles are written into this directory instead of the default logging directory.</description>
+    </property>
     <property>
         <name>block_cache_capacity_mb</name>
         <value>512</value>
@@ -17,34 +31,6 @@
         <description>Whether the Log/WAL should explicitly call fsync() after each write.</description>
     </property>
     <property>
-        <name>fs_data_dirs</name>
-        <value>none</value>
-        <default>none</default>
-        <tags>stable</tags>
-        <description>Comma-separated list of directories with data blocks. If this is not specified, fs_wal_dir will be used as the sole data block directory.</description>
-    </property>
-    <property>
-        <name>fs_metadata_dir</name>
-        <value>none</value>
-        <default>none</default>
-        <tags>stable</tags>
-        <description>Directory with metadata. If this is not specified, for compatibility with Kudu 1.6 and below, Kudu will check the first entry of fs_data_dirs for metadata and use it as the metadata directory if any exists. If none exists, fs_wal_dir will be used as the metadata directory.</description>
-    </property>
-    <property>
-        <name>fs_wal_dir</name>
-        <value>none</value>
-        <default>none</default>
-        <tags>stable</tags>
-        <description>Directory with write-ahead logs. If this is not specified, the program will not start. May be the same as fs_data_dirs</description>
-    </property>
-    <property>
-        <name>master_addresses</name>
-        <value>none</value>
-        <default>none</default>
-        <tags>stable</tags>
-        <description>Comma-separated list of the RPC addresses belonging to all Masters in this cluster. NOTE: if not specified, configures a non-replicated Master.</description>
-    </property>
-    <property>
         <name>rpc_bind_addresses</name>
         <value>0.0.0.0</value>
         <default>0.0.0.0</default>
@@ -52,57 +38,15 @@
         <description>Comma-separated list of addresses to bind to for RPC connections. Currently, ephemeral ports (i.e. port 0) are not allowed.</description>
     </property>
     <property>
-        <name>keytab_file</name>
-        <value>none</value>
-        <default>none</default>
-        <tags>stable</tags>
-        <description>Path to the Kerberos Keytab file for this server. Specifying a keytab file will cause the server to kinit, and enable Kerberos to be used to authenticate RPC connections.</description>
-    </property>
-    <property>
-        <name>superuser_acl</name>
-        <value>none</value>
-        <default>none</default>
-        <tags>sensitive,stable</tags>
-        <description>The list of usernames to allow as super users, comma-separated. A '*' entry indicates that all authenticated users are allowed. If this is left unset or blank, the default behavior is that the identity of the daemon itself determines the superuser. If the daemon is logged in from a Keytab, then the local username from the Kerberos principal is used; otherwise, the local Unix username is used.</description>
-    </property>
-    <property>
-        <name>user_acl</name>
-        <value>*</value>
-        <default>*</default>
-        <tags>sensitive,stable</tags>
-        <description>The list of usernames who may access the cluster, comma-separated. A '*' entry indicates that all authenticated users are allowed.</description>
-    </property>
-    <property>
-        <name>webserver_certificate_file</name>
-        <value>none</value>
-        <default>none</default>
-        <tags>stable</tags>
-        <description>The location of the debug webserver’s SSL certificate file, in PEM format. If empty, webserver SSL support is not enabled. If --webserver_private_key_file is set, this option must be set as well.</description>
-    </property>
-    <property>
         <name>webserver_port</name>
-        <value>0</value>
+        <value>8051</value>
         <default>0</default>
         <tags>stable</tags>
         <description>Port to bind to for the web server</description>
     </property>
     <property>
-        <name>webserver_private_key_file</name>
-        <value>none</value>
-        <default>none</default>
-        <tags>stable</tags>
-        <description>The full path to the private key used as a counterpart to the public key contained in --webserver_certificate_file. If --webserver_certificate_file is set, this option must be set as well.</description>
-    </property>
-    <property>
-        <name>webserver_private_key_password_cmd</name>
-        <value>none</value>
-        <default>none</default>
-        <tags>stable</tags>
-        <description>A Unix command whose output returns the password used to decrypt the Webserver’s certificate private key file specified in --webserver_private_key_file. If the PEM key file is not password-protected, this flag does not need to be set. Trailing whitespace will be trimmed before it is used to decrypt the private key</description>
-    </property>
-    <property>
         <name>log_filename</name>
-        <value>none</value>
+        <value>kudu-master</value>
         <default>none</default>
         <tags>stable</tags>
         <description>Prefix of log filename - full path is &lt;log_dir&gt;/&lt;log_filename&gt;.[INFO|WARN|ERROR|FATAL]</description>
@@ -122,46 +66,11 @@
         <description>Maximum amount of memory this daemon should use, in bytes. A value of 0 autosizes based on the total system memory. A value of -1 disables all memory limiting.</description>
     </property>
     <property>
-        <name>flagfile</name>
-        <value>none</value>
-        <default>none</default>
-        <tags>stable</tags>
-        <description>load flags from file</description>
-    </property>
-    <property>
-        <name>help</name>
-        <value>false</value>
-        <default>false</default>
-        <tags>stable</tags>
-        <description>show help on all flags [tip: all flags can have two dashes]</description>
-    </property>
-    <property>
-        <name>version</name>
-        <value>false</value>
-        <default>false</default>
-        <tags>stable</tags>
-        <description>show version and build info and exit</description>
-    </property>
-    <property>
         <name>colorlogtostderr</name>
         <value>false</value>
         <default>false</default>
         <tags>runtime,stable</tags>
         <description>color messages logged to stderr (if supported by terminal)</description>
-    </property>
-    <property>
-        <name>log_dir</name>
-        <value>none</value>
-        <default>none</default>
-        <tags>stable</tags>
-        <description>If specified, logfiles are written into this directory instead of the default logging directory.</description>
-    </property>
-    <property>
-        <name>logtostderr</name>
-        <value>false</value>
-        <default>false</default>
-        <tags>runtime,stable</tags>
-        <description>log messages go to stderr instead of logfiles</description>
     </property>
     <property>
         <name>max_log_size</name>
@@ -176,13 +85,6 @@
         <default>false</default>
         <tags>advanced,stable</tags>
         <description>Enables heap profiling for the lifetime of the process. Profile output will be stored in the directory specified by -heap_profile_path.</description>
-    </property>
-    <property>
-        <name>heap_profile_path</name>
-        <value>none</value>
-        <default>none</default>
-        <tags>advanced,stable</tags>
-        <description>Output path to store heap profiles. If not set profiles are stored in /tmp/&lt;process-name&gt;.&lt;pid&gt;.&lt;n&gt;.heap.</description>
     </property>
     <property>
         <name>unlock_experimental_flags</name>
@@ -200,66 +102,10 @@
     </property>
     <property>
         <name>fromenv</name>
-        <value>none</value>
+        <value>log_dir</value>
         <default>none</default>
         <tags>advanced,stable</tags>
         <description>set flags from the environment [use 'export FLAGS_flag1=value']</description>
-    </property>
-    <property>
-        <name>tryfromenv</name>
-        <value>none</value>
-        <default>none</default>
-        <tags>advanced,stable</tags>
-        <description>set flags from the environment if present</description>
-    </property>
-    <property>
-        <name>undefok</name>
-        <value>none</value>
-        <default>none</default>
-        <tags>advanced,stable</tags>
-        <description>comma-separated list of flag names that it is okay to specify on the command line even if the program does not define a flag with that name.  IMPORTANT: flags in this list that have arguments MUST use the flag=value format</description>
-    </property>
-    <property>
-        <name>helpmatch</name>
-        <value>none</value>
-        <default>none</default>
-        <tags>advanced,stable</tags>
-        <description>show help on modules whose name contains the specified substr</description>
-    </property>
-    <property>
-        <name>helpon</name>
-        <value>none</value>
-        <default>none</default>
-        <tags>advanced,stable</tags>
-        <description>show help on the modules named by this flag value</description>
-    </property>
-    <property>
-        <name>helppackage</name>
-        <value>false</value>
-        <default>false</default>
-        <tags>advanced,stable</tags>
-        <description>show help on all modules in the main package</description>
-    </property>
-    <property>
-        <name>helpshort</name>
-        <value>false</value>
-        <default>false</default>
-        <tags>advanced,stable</tags>
-        <description>show help on only the main module for this program</description>
-    </property>
-    <property>
-        <name>helpxml</name>
-        <value>false</value>
-        <default>false</default>
-        <tags>advanced,stable</tags>
-        <description>produce an xml version of help</description>
-    </property>
-    <property>
-        <name>log_link</name>
-        <value>none</value>
-        <default>none</default>
-        <tags>advanced,stable</tags>
-        <description>Put additional links to the log files in this directory</description>
     </property>
     <property>
         <name>log_prefix</name>
@@ -302,13 +148,6 @@
         <default>0</default>
         <tags>runtime,advanced,stable</tags>
         <description>Show all VLOG(m) messages for m ⇐ this. Overridable by --vmodule.</description>
-    </property>
-    <property>
-        <name>vmodule</name>
-        <value>none</value>
-        <default>none</default>
-        <tags>advanced,stable</tags>
-        <description>per-module verbose level. Argument is a comma-separated list of &lt;module name&gt;=&lt;log level&gt;. &lt;module name&gt; is a glob pattern, matched against the filename base (that is, name ignoring .cc/.h./-inl.h). &lt;log level&gt; overrides any value given by --v.</description>
     </property>
     <property>
         <name>cfile_verify_checksums</name>
@@ -480,7 +319,7 @@
     </property>
     <property>
         <name>block_manager</name>
-        <value>file</value>
+        <value>log</value>
         <default>file</default>
         <tags>advanced</tags>
         <description>Which block manager to use for storage. Only the file block manager is supported for non-Linux systems.</description>
@@ -647,13 +486,6 @@
         <description>The maximum number of bytes to display on the debug webserver’s log page</description>
     </property>
     <property>
-        <name>rpc_advertised_addresses</name>
-        <value>none</value>
-        <default>none</default>
-        <tags>advanced</tags>
-        <description>Comma-separated list of addresses to advertise externally for RPC connections. Ephemeral ports (i.e. port 0) are not allowed. This should be configured when the locally bound RPC addresses specified in --rpc_bind_addresses are not externally resolvable, for example, if Kudu is deployed in a container.</description>
-    </property>
-    <property>
         <name>rpc_num_acceptors_per_address</name>
         <value>1</value>
         <default>1</default>
@@ -724,12 +556,6 @@
         <description>Timeout for negotiating an RPC connection.</description>
     </property>
     <property>
-        <name>rpc_private_key_password_cmd</name>
-        <value>none</value>
-        <default>none</default>
-        <description>A Unix command whose output returns the password used to decrypt the RPC server’s private key file specified in --rpc_private_key_file. If the .PEM key file is not password-protected, this flag does not need to be set. Trailing whitespace will be trimmed before it is used to decrypt the private key.</description>
-    </property>
-    <property>
         <name>rpc_tls_ciphers</name>
         <value>ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA</value>
         <default>ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA</default>
@@ -772,21 +598,8 @@
         <description>The webserver will add an 'X-Frame-Options' HTTP header with this value to all responses. This can help prevent clickjacking attacks.</description>
     </property>
     <property>
-        <name>webserver_advertised_addresses</name>
-        <value>none</value>
-        <default>none</default>
-        <tags>advanced</tags>
-        <description>Comma-separated list of addresses to advertise externally for HTTP(S) connections. Ephemeral ports (i.e. port 0) are not allowed. This should be configured when the locally bound webserver address specified in --webserver_interface and --webserver_port are not externally resolvable, for example, if Kudu is deployed in a container.</description>
-    </property>
-    <property>
-        <name>webserver_authentication_domain</name>
-        <value>none</value>
-        <default>none</default>
-        <description>Domain used for debug webserver authentication</description>
-    </property>
-    <property>
         <name>webserver_doc_root</name>
-        <value>none</value>
+        <value>/usr/lib/kudu/www</value>
         <default>none</default>
         <tags>advanced</tags>
         <description>Files under &lt;webserver_doc_root&gt; are accessible via the debug webserver. Defaults to $KUDU_HOME/www, or if $KUDU_HOME is not set, disables the document root</description>
@@ -799,24 +612,11 @@
         <description>If true, webserver may serve static files from the webserver_doc_root</description>
     </property>
     <property>
-        <name>webserver_interface</name>
-        <value>none</value>
-        <default>none</default>
-        <tags>advanced</tags>
-        <description>Interface to start debug webserver on. If blank, webserver binds to 0.0.0.0</description>
-    </property>
-    <property>
         <name>webserver_num_worker_threads</name>
         <value>50</value>
         <default>50</default>
         <tags>advanced</tags>
         <description>Maximum number of threads to start for handling web server requests</description>
-    </property>
-    <property>
-        <name>webserver_password_file</name>
-        <value>none</value>
-        <default>none</default>
-        <description>(Optional) Location of .htpasswd file containing user names and hashed passwords for debug webserver authentication</description>
     </property>
     <property>
         <name>webserver_tls_ciphers</name>
@@ -1068,13 +868,6 @@
         <default>10</default>
         <tags>advanced</tags>
         <description>Maximum percentage of the RSS that tcmalloc is allowed to use for reserved but unallocated memory.</description>
-    </property>
-    <property>
-        <name>log_backtrace_at</name>
-        <value>none</value>
-        <default>none</default>
-        <tags>advanced</tags>
-        <description>Emit a backtrace when logging at file:linenum.</description>
     </property>
     <property>
         <name>logbuflevel</name>
