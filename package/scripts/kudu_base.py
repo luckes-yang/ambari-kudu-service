@@ -17,5 +17,3 @@ class KuduBase(Script):
         if self.impala_packages is not None and len(self.impala_packages):
             for pack in self.impala_packages:
                 Package(pack)
-        import params
-        env.set_params(params)
