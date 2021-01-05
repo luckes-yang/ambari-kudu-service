@@ -108,13 +108,6 @@
         <description>Unlock flags marked as 'experimental'. These flags are not guaranteed to be maintained across releases of Kudu, and may enable features or behavior known to be unstable. Use at your own risk.</description>
     </property>
     <property>
-        <name>unlock_unsafe_flags</name>
-        <value>false</value>
-        <default>false</default>
-        <tags>stable,advanced</tags>
-        <description>Unlock flags marked as 'unsafe'. These flags are not guaranteed to be maintained across releases of Kudu, and enable features or behavior known to be unsafe. Use at your own risk.</description>
-    </property>
-    <property>
         <name>fromenv</name>
         <value>log_dir</value>
         <default>none</default>
@@ -616,13 +609,6 @@
         <value>0.0099999997764825821</value>
         <default>0.0099999997764825821</default>
         <description>The minimum quality for a compaction to run. If a compaction does not improve the average height of DiskRowSets by at least this amount, the compaction will be considered ineligible.</description>
-    </property>
-    <property>
-        <name>enable_undo_delta_block_gc</name>
-        <value>true</value>
-        <default>true</default>
-        <tags>evolving</tags>
-        <description>Whether to enable undo delta block garbage collection. This only affects the undo delta block deletion background task, and doesn’t control whether compactions delete ancient history. To change what is considered ancient history use --tablet_history_max_age_sec</description>
     </property>
     <property>
         <name>tablet_bloom_block_size</name>
