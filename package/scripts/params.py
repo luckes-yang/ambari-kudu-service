@@ -13,6 +13,8 @@ stack_name = default("/hostLevelParams/stack_name", None)
 
 master_env = config['configurations']['kudu-master-env']
 tserver_env = config['configurations']['kudu-tserver-env']
+kudu_master_hosts = ",".join(config['clusterHostInfo']['kudu_master_hosts'])
+kudu_master_hosts_num = len(config['clusterHostInfo']['kudu_master_hosts'])
 
 current_host_name = socket.gethostname()
 hdfs_host = default("/clusterHostInfo/namenode_hosts", [''])[0]
