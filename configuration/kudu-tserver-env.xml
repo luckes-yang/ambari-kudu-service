@@ -39,7 +39,7 @@
     </property>
     <property>
         <name>webserver_port</name>
-        <value>8050</value>
+        <value>80500</value>
         <default>0</default>
         <tags>stable</tags>
         <description>Port to bind to for the web server</description>
