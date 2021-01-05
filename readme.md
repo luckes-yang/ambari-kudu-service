@@ -38,6 +38,7 @@ git clone https://github.com/luckes-yang/ambari-kudu-service.git /var/lib/ambari
 ```shell
 ambari-server restart
 ```
+*tserver webserver port默认端口为8050，和yarn组件的ResourceManager端口冲突，导致无法启动，本项目中将其修改为80500*
 #### 4.在ambari web ui进行组件安装
 略
 #### 5.效果截图
