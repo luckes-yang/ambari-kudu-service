@@ -2,6 +2,9 @@
 # modify them in /etc/default/kudu-master.
 --fromenv=rpc_bind_addresses
 --fromenv=log_dir
+{% if kudu_master_hosts_num > 1 %}
+--master_addresses={{kudu_master_hosts}}
+{% endif %}
 
 {% for key,value in master_env.iteritems() %}
 --{{key}}={{value}}
