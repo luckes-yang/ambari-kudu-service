@@ -14,6 +14,7 @@
                     <displayName>Kudu_Master</displayName>
                     <category>MASTER</category>
                     <cardinality>1+</cardinality>
+                    <versionAdvertised>true</versionAdvertised>
                     <commandScript>
                         <script>scripts/kudu-master.py</script>
                         <scriptType>PYTHON</scriptType>
@@ -25,11 +26,19 @@
                     <displayName>Kudu_TServer</displayName>
                     <category>SLAVE</category>
                     <cardinality>1+</cardinality>
+                    <versionAdvertised>true</versionAdvertised>
                     <commandScript>
                         <script>scripts/kudu-tserver.py</script>
                         <scriptType>PYTHON</scriptType>
                         <timeout>10000</timeout>
                     </commandScript>
+                    <configFiles>
+                        <configFile>
+                            <type>xml</type>
+                            <fileName>kudu-tserver-env.xml</fileName>
+                            <dictionaryName>kudu_tserver-env</dictionaryName>
+                        </configFile>
+                    </configFiles>
                 </component>
             </components>
             <osSpecifics>
@@ -37,9 +46,6 @@
                     <osFamily>any</osFamily>
                 </osSpecific>
             </osSpecifics>
-<!--            <requiredServices>-->
-<!--                <service>IMPALA</service>-->
-<!--            </requiredServices>-->
             <configuration-dependencies>
                 <config-type>kudu-master-env</config-type>
                 <config-type>kudu-tserver-env</config-type>
