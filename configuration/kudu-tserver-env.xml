@@ -45,13 +45,6 @@
         <description>Port to bind to for the web server</description>
     </property>
     <property>
-        <name>tserver_master_addrs</name>
-        <value>master1:7051</value>
-        <default>127.0.0.1:7051</default>
-        <tags>stable</tags>
-        <description>Comma separated addresses of the masters which the tablet server should connect to. The masters do not read this flag — configure the masters separately using 'rpc_bind_addresses'.</description>
-    </property>
-    <property>
         <name>log_filename</name>
         <value>kudu-tserver</value>
         <default>none</default>
