@@ -14,7 +14,6 @@
                     <displayName>Kudu_Master</displayName>
                     <category>MASTER</category>
                     <cardinality>1+</cardinality>
-                    <versionAdvertised>true</versionAdvertised>
                     <commandScript>
                         <script>scripts/kudu-master.py</script>
                         <scriptType>PYTHON</scriptType>
@@ -26,7 +25,6 @@
                     <displayName>Kudu_TServer</displayName>
                     <category>SLAVE</category>
                     <cardinality>1+</cardinality>
-                    <versionAdvertised>true</versionAdvertised>
                     <commandScript>
                         <script>scripts/kudu-tserver.py</script>
                         <scriptType>PYTHON</scriptType>
