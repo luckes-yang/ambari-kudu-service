@@ -3,6 +3,7 @@
 --fromenv=rpc_bind_addresses
 --fromenv=log_dir
 
+--tserver_master_addrs={{kudu_master_hosts}}
 {% for key,value in tserver_env.iteritems() %}
 --{{key}}={{value}}
 {% endfor %}
